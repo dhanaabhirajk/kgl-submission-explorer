@@ -2,9 +2,8 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react()],
-  // Set base to repository name for GitHub Pages
-  // Replace 'kgl-submission-explorer' with your actual repo name
-  base: '/kgl-submission-explorer/',
-})
+  // Set base for GitHub Pages deployment (only in production build)
+  base: mode === 'production' ? '/kgl-submission-explorer/' : '/',
+}))
