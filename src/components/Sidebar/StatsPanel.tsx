@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDataStore } from '../../store/useDataStore';
-import { Activity, Hash, Layers, Tag, Sparkles, TrendingUp } from 'lucide-react';
+import { Activity, Hash, Layers, Tag, Sparkles, TrendingUp, Info } from 'lucide-react';
 import { TagDistributionChart } from '../Charts/TagDistributionChart';
 import { CategoryChart } from '../Charts/CategoryChart';
 import { ClusterBarChart } from '../Charts/ClusterBarChart';
 import { UniquenessHistogram } from '../Charts/UniquenessHistogram';
 import { UniqueProjectsList } from '../Charts/UniqueProjectsList';
+import { InfoTooltip } from '../UI/InfoTooltip';
 
 export const StatsPanel: React.FC = () => {
   const { datasetStats } = useDataStore();
@@ -28,6 +29,7 @@ export const StatsPanel: React.FC = () => {
         <div className="flex items-center gap-2 mb-3">
           <Activity className="w-4 h-4 text-gray-400" />
           <span className="font-medium text-white">Dataset Overview</span>
+          <InfoTooltip content="Overview of the hackathon dataset containing 811 AI projects. All metrics are computed from the preprocessed data including project descriptions, tags, and cluster assignments." />
         </div>
         
         <div className="grid grid-cols-2 gap-2">
@@ -78,6 +80,7 @@ export const StatsPanel: React.FC = () => {
         <div className="flex items-center gap-2 mb-3">
           <Tag className="w-4 h-4 text-gray-400" />
           <span className="font-medium text-white">Tag Distribution</span>
+          <InfoTooltip content="Tags were automatically assigned by an LLM based on project descriptions, using a predefined list of tags. Shows the most and least common tags across all 811 projects." />
         </div>
         <TagDistributionChart 
           topTags={datasetStats.topTags}
@@ -90,6 +93,7 @@ export const StatsPanel: React.FC = () => {
         <div className="flex items-center gap-2 mb-3">
           <Tag className="w-4 h-4 text-gray-400" />
           <span className="font-medium text-white">All Category Tags</span>
+          <InfoTooltip content="Category tags were automatically assigned by an LLM using a predefined list of 14 categories, based on the project descriptions. Each project can belong to multiple categories." />
         </div>
         <CategoryChart categories={datasetStats.categoryFrequencies} />
       </div>
@@ -99,6 +103,7 @@ export const StatsPanel: React.FC = () => {
         <div className="flex items-center gap-2 mb-3">
           <Layers className="w-4 h-4 text-gray-400" />
           <span className="font-medium text-white">Cluster Member Distribution</span>
+          <InfoTooltip content="Projects are grouped into hierarchical clusters based on their embedding vectors. High-level clusters (12 total) provide broad categories, while detailed clusters (36 total) offer more specific groupings." />
         </div>
         <ClusterBarChart 
           highLevelClusters={datasetStats.highLevelClusterCounts}
@@ -111,6 +116,7 @@ export const StatsPanel: React.FC = () => {
         <div className="flex items-center gap-2 mb-3">
           <Sparkles className="w-4 h-4 text-gray-400" />
           <span className="font-medium text-white">Project Uniqueness</span>
+          <InfoTooltip content="Uniqueness is calculated using cosine distance between embedding vectors of AI-standardized project descriptions. For each project, we average the similarity scores to its 50 most similar neighbors. Lower average similarity = more unique project." />
         </div>
         
         <div className="space-y-4">
