@@ -1,12 +1,16 @@
 import { create } from 'zustand';
 import type { Submission, Cluster, SimilarityData } from '../types';
 import { dataLoader } from '../services/dataLoader';
+import { statsService, type DatasetStatistics } from '../services/statsService';
 
 interface DataState {
   // Data
   submissions: Submission[];
   clusters: Cluster[];
   similarities: Map<number, SimilarityData>;
+  
+  // Statistics
+  datasetStats: DatasetStatistics | null;
   
   // Loading state
   isLoading: boolean;
@@ -22,6 +26,9 @@ interface DataState {
   // Filtered projects
   filteredProjectIds: Set<number> | null;
   
+  // Highlighted unique projects
+  uniqueProjectIds: Set<number> | null;
+  
   // Actions
   loadData: () => Promise<void>;
   setSelectedProject: (id: number | null) => void;
@@ -29,6 +36,7 @@ interface DataState {
   setHoveredProject: (id: number | null) => void;
   setSelectedCluster: (id: string | null) => void;
   setFilteredProjects: (ids: Set<number> | null) => void;
+  setUniqueProjectsHighlight: (projectIds: number[] | null) => void;
   getSimilarProjects: (projectId: number) => SimilarityData | undefined;
   getProjectById: (id: number) => Submission | undefined;
   getClusterById: (id: string) => Cluster | undefined;
@@ -40,12 +48,14 @@ export const useDataStore = create<DataState>((set, get) => ({
   submissions: [],
   clusters: [],
   similarities: new Map(),
+  datasetStats: null,
   isLoading: false,
   error: null,
   selectedProjectId: null,
   hoveredProjectId: null,
   selectedClusterId: null,
   filteredProjectIds: null,
+  uniqueProjectIds: null,
 
   // Load all data
   loadData: async () => {
@@ -60,10 +70,18 @@ export const useDataStore = create<DataState>((set, get) => ({
         similarityMap.set(sim.data_point_id, sim);
       });
       
+      // Compute statistics
+      const datasetStats = statsService.computeStatistics(
+        submissions,
+        clusters,
+        similarityMap
+      );
+      
       set({ 
         submissions, 
         clusters, 
         similarities: similarityMap,
+        datasetStats,
         isLoading: false 
       });
     } catch (error) {
@@ -135,5 +153,12 @@ export const useDataStore = create<DataState>((set, get) => ({
   // Set filtered projects
   setFilteredProjects: (ids: Set<number> | null) => {
     set({ filteredProjectIds: ids });
+  },
+
+  // Set unique projects highlight
+  setUniqueProjectsHighlight: (projectIds: number[] | null) => {
+    set({ 
+      uniqueProjectIds: projectIds ? new Set(projectIds) : null 
+    });
   },
 }));

@@ -19,6 +19,7 @@ export const ScatterPlot: React.FC<ScatterPlotProps> = ({ width, height }) => {
     hoveredProjectId,
     selectedClusterId,
     filteredProjectIds,
+    uniqueProjectIds,
     setSelectedProject,
     setSelectedCluster,
     setHoveredProject,
@@ -321,6 +322,26 @@ export const ScatterPlot: React.FC<ScatterPlotProps> = ({ width, height }) => {
         .style('pointer-events', (d: any) => {
           return filteredProjectIds.has(d.data_point_id) ? 'auto' : 'none';
         });
+    } else if (uniqueProjectIds !== null && uniqueProjectIds.size > 0) {
+      // Highlight unique projects with purple glow
+      circles
+        .transition()
+        .duration(300)
+        .attr('fill-opacity', (d: any) => {
+          return uniqueProjectIds.has(d.data_point_id) ? 1 : 0.2;
+        })
+        .attr('r', (d: any) => {
+          return uniqueProjectIds.has(d.data_point_id) ? 6 : 3;
+        })
+        .attr('stroke', (d: any) => {
+          return uniqueProjectIds.has(d.data_point_id) ? '#a855f7' : 'none';
+        })
+        .attr('stroke-width', (d: any) => {
+          return uniqueProjectIds.has(d.data_point_id) ? 2 : 0;
+        })
+        .style('filter', (d: any) => {
+          return uniqueProjectIds.has(d.data_point_id) ? 'drop-shadow(0 0 8px rgba(168, 85, 247, 0.8))' : 'none';
+        });
     } else {
       circles
         .transition()
@@ -332,7 +353,7 @@ export const ScatterPlot: React.FC<ScatterPlotProps> = ({ width, height }) => {
         .attr('stroke-width', 0)
         .style('pointer-events', 'auto');
     }
-  }, [selectedProjectId, selectedClusterId, filteredProjectIds, clusters, getSimilarProjects, getClusterById]);
+  }, [selectedProjectId, selectedClusterId, filteredProjectIds, uniqueProjectIds, clusters, getSimilarProjects, getClusterById]);
 
   return (
     <svg 
