@@ -1,6 +1,6 @@
-## Hackathon Submission Explorer — 811 AI Projects 
+## Hackathon Submission Explorer
 
-A lightweight, client‑side app that maps 811 AI hackathon submissions so you can see the landscape at a glance and dive into any project fast. Each dot is a project positioned by UMAP and colored by cluster; click to open details and similar projects. A built‑in statistics view reveals tag/category trends, high‑level (12) and detailed (~36) cluster distributions, and a uniqueness index for spotting crowded areas and white space.
+A lightweight, client‑side app that maps 800+ nano-banana hackathon submissions so you can see the landscape at a glance and dive into any project fast. Each dot is a project positioned by UMAP and colored by cluster; hover or click to open details and similar projects. A built‑in statistics view reveals tag/category trends, high‑level (12) and detailed (~36) cluster distributions, and a uniqueness index for spotting crowded areas and white space.
 
 Explore the live demo: [serjoschduering.github.io/kgl-submission-explorer](https://serjoschduering.github.io/kgl-submission-explorer/)  
 
