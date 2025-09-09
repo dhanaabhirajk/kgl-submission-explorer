@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import { useDataStore } from '../../store/useDataStore';
 import type { Submission } from '../../types';
+import { throttleRAF, screenToData, isPointVisible, getDataSpaceRadius } from '../../utils/proximity';
 
 interface ScatterPlotProps {
   width: number;
@@ -12,6 +13,11 @@ export const ScatterPlot: React.FC<ScatterPlotProps> = ({ width, height }) => {
   const svgRef = useRef<SVGSVGElement>(null);
   const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null);
   const transformRef = useRef<d3.ZoomTransform | null>(null);
+  const quadtreeRef = useRef<d3.Quadtree<Submission> | null>(null);
+  const xScaleRef = useRef<d3.ScaleLinear<number, number> | null>(null);
+  const yScaleRef = useRef<d3.ScaleLinear<number, number> | null>(null);
+  const proximityLineRef = useRef<d3.Selection<SVGLineElement, unknown, null, undefined> | null>(null);
+  const throttledMouseMoveRef = useRef<ReturnType<typeof throttleRAF> | null>(null);
   const { 
     submissions, 
     clusters,
@@ -53,6 +59,18 @@ export const ScatterPlot: React.FC<ScatterPlotProps> = ({ width, height }) => {
     const yScale = d3.scaleLinear()
       .domain(yExtent)
       .range([height - padding, padding]);
+
+    // Store scales for proximity calculations
+    xScaleRef.current = xScale;
+    yScaleRef.current = yScale;
+
+    // Build quadtree for efficient proximity searches
+    const quadtree = d3.quadtree<Submission>()
+      .x(d => xScale(d.umap_dim_1))
+      .y(d => yScale(d.umap_dim_2))
+      .addAll(submissions);
+    
+    quadtreeRef.current = quadtree;
 
     // Create color maps for both high-level and detailed clusters
     const detailedClusters = clusters.filter(c => c.cluster_level === 'Detailed');
@@ -147,6 +165,17 @@ export const ScatterPlot: React.FC<ScatterPlotProps> = ({ width, height }) => {
       g.attr('transform', currentTransform.toString());
     }
 
+    // Add proximity line (initially hidden)
+    const proximityLine = g.append('line')
+      .attr('class', 'proximity-line')
+      .attr('stroke', '#666')
+      .attr('stroke-width', 1)
+      .attr('stroke-dasharray', '3,3')
+      .attr('opacity', 0)
+      .attr('pointer-events', 'none');
+    
+    proximityLineRef.current = proximityLine;
+
     // Draw points
     const circles = g.selectAll<SVGCircleElement, Submission>('circle')
       .data(submissions)
@@ -162,44 +191,101 @@ export const ScatterPlot: React.FC<ScatterPlotProps> = ({ width, height }) => {
       .attr('data-id', d => d.data_point_id)
       .attr('class', 'transition-all duration-200');
 
-    // Add interactions
-    circles
-      .on('mouseenter', function(event, d) {
-        setHoveredProject(d.data_point_id);
-        // Store mouse position for tooltip
-        const rect = svgRef.current!.getBoundingClientRect();
-        (window as any).hoveredPosition = { 
-          x: event.clientX - rect.left, 
-          y: event.clientY - rect.top 
-        };
-        d3.select(this)
+    // Click handler for direct selection (keep this for direct clicks)
+    circles.on('click', (event, d) => {
+      event.stopPropagation();
+      setSelectedProject(d.data_point_id);
+    });
+
+    // Create throttled mousemove handler for proximity detection
+    const handleMouseMove = (event: MouseEvent) => {
+      const rect = svgRef.current!.getBoundingClientRect();
+      const mouseX = event.clientX - rect.left;
+      const mouseY = event.clientY - rect.top;
+
+      // Store mouse position for tooltip
+      (window as any).hoveredPosition = { x: mouseX, y: mouseY };
+
+      // Convert to data space if we have a transform
+      const transform = transformRef.current || d3.zoomIdentity;
+      const dataCoords = screenToData(mouseX, mouseY, transform);
+
+      // Calculate proximity radius in data space
+      const proximityRadius = getDataSpaceRadius(45, transform.k);
+
+      // Find nearest point within radius
+      const nearest = quadtree.find(dataCoords.x, dataCoords.y, proximityRadius);
+
+      if (nearest && isPointVisible(nearest.data_point_id, filteredProjectIds)) {
+        // Update hovered project
+        setHoveredProject(nearest.data_point_id);
+
+        // Get the color for the line
+        const nearestColor = detailedColorMap.get(nearest.data_point_id) || '#666';
+
+        // Update proximity line
+        proximityLine
+          .attr('x1', dataCoords.x)
+          .attr('y1', dataCoords.y)
+          .attr('x2', xScale(nearest.umap_dim_1))
+          .attr('y2', yScale(nearest.umap_dim_2))
+          .attr('stroke', nearestColor)
+          .transition()
+          .duration(150)
+          .attr('opacity', 0.4);
+
+        // Highlight the nearest point
+        g.selectAll('circle')
+          .filter((d: any) => d.data_point_id === nearest.data_point_id)
           .attr('r', 6)
-          .attr('fill-opacity', 1)
-          .attr('stroke', '#fff')
-          .attr('stroke-width', 2);
-      })
-      .on('mousemove', function(event, d) {
-        // Update position on move
-        const rect = svgRef.current!.getBoundingClientRect();
-        (window as any).hoveredPosition = { 
-          x: event.clientX - rect.left, 
-          y: event.clientY - rect.top 
-        };
-      })
-      .on('mouseleave', function(event, d) {
+          .attr('fill-opacity', 1);
+      } else {
+        // No point within proximity
         setHoveredProject(null);
         (window as any).hoveredPosition = null;
-        if (d.data_point_id !== selectedProjectId) {
-          d3.select(this)
-            .attr('r', 4)
-            .attr('fill-opacity', 0.85)
-            .attr('stroke', 'none');
-        }
-      })
-      .on('click', (event, d) => {
-        event.stopPropagation();
-        setSelectedProject(d.data_point_id);
-      });
+
+        // Hide proximity line
+        proximityLine
+          .transition()
+          .duration(150)
+          .attr('opacity', 0);
+
+        // Reset all circle sizes (except selected)
+        g.selectAll('circle')
+          .filter((d: any) => d.data_point_id !== selectedProjectId)
+          .attr('r', 4)
+          .attr('fill-opacity', 0.85);
+      }
+    };
+
+    // Create throttled version
+    throttledMouseMoveRef.current = throttleRAF(handleMouseMove);
+
+    // Add SVG-wide mouse event handlers
+    svg.on('mousemove', (event) => {
+      if (throttledMouseMoveRef.current) {
+        throttledMouseMoveRef.current(event);
+      }
+    });
+
+    svg.on('mouseleave', () => {
+      setHoveredProject(null);
+      (window as any).hoveredPosition = null;
+      
+      // Hide proximity line
+      if (proximityLineRef.current) {
+        proximityLineRef.current
+          .transition()
+          .duration(150)
+          .attr('opacity', 0);
+      }
+
+      // Reset all circle sizes (except selected)
+      g.selectAll('circle')
+        .filter((d: any) => d.data_point_id !== selectedProjectId)
+        .attr('r', 4)
+        .attr('fill-opacity', 0.85);
+    });
 
     // Add high-level cluster labels (using already defined highLevelClusters from above)
     const highLevelLabels = g.selectAll('.high-level-label')
@@ -241,7 +327,14 @@ export const ScatterPlot: React.FC<ScatterPlotProps> = ({ width, height }) => {
       setSelectedCluster(null);
     });
 
-  }, [submissions, clusters, width, height, setSelectedProject, setSelectedCluster, setHoveredProject]);
+    // Cleanup function
+    return () => {
+      if (throttledMouseMoveRef.current) {
+        throttledMouseMoveRef.current.cancel();
+      }
+    };
+
+  }, [submissions, clusters, width, height, filteredProjectIds, selectedProjectId, setSelectedProject, setSelectedCluster, setHoveredProject]);
 
   // Separate effect for handling selection and filter changes without re-rendering
   useEffect(() => {
