@@ -176,6 +176,24 @@ function App() {
             </div>
           </div>
         )}
+
+        {/* Made by badge */}
+        <a
+          href="https://www.linkedin.com/in/serjoscha-d%C3%BCring-920644173"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="fixed bottom-4 right-4 z-50 group"
+          aria-label="Visit Serjoscha Düring on LinkedIn"
+        >
+          <span className="flex items-center gap-2 bg-gray-900/80 border border-gray-700 text-gray-300 hover:text-white hover:border-[#0A66C2] rounded-full px-3 py-1.5 shadow-lg backdrop-blur">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="w-4 h-4">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.025-3.036-1.849-3.036-1.85 0-2.132 1.445-2.132 2.939v5.666H9.358V9h3.414v1.561h.049c.476-.9 1.637-1.849 3.369-1.849 3.602 0 4.268 2.371 4.268 5.455v6.285zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zM7.114 20.452H3.56V9h3.554v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.226.792 24 1.771 24h20.451C23.2 24 24 23.226 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+            </svg>
+            <span className="text-xs">
+              Made by <span className="font-medium">Serjoscha Düring</span> · <span className="text-[#0A66C2]">LinkedIn</span>
+            </span>
+          </span>
+        </a>
       </div>
     </div>
   );
