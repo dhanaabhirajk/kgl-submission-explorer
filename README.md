@@ -1,7 +1,8 @@
-## Hackathon Submission Explorer — 811 AI Projects + 800+ Nano Banana Workflows
+## Hackathon Submission Explorer — 811 AI Projects 
+
+A lightweight, client‑side app that maps 811 AI hackathon submissions so you can see the landscape at a glance and dive into any project fast. Each dot is a project positioned by UMAP and colored by cluster; click to open details and similar projects. A built‑in statistics view reveals tag/category trends, high‑level (12) and detailed (~36) cluster distributions, and a uniqueness index for spotting crowded areas and white space.
 
 Explore the live demo: [serjoschduering.github.io/kgl-submission-explorer](https://serjoschduering.github.io/kgl-submission-explorer/)  
-Bookmark the link above — it appears again at the end.
 
 ![Animated demo of the explorer](docs/demo-ani.gif)
 
@@ -69,12 +70,7 @@ npm run dev
 - **Styles**: Tailwind
 - **Data**: Static JSON (projects, clusters, similarities) loaded client-side
 
-### Roadmap
 
-- Responsive UI and keyboard accessibility
-- Collision-aware cluster labels
-- Sharable URLs for saved views
-- AECO-focused presets and example workflows
 
 ### Credits & Links
 
@@ -83,6 +79,3 @@ npm run dev
 ### Notes & disclaimer
 
 - The dataset was compiled from public hackathon materials; a small number of projects may be missing or have incomplete metadata.
-- Cluster counts are reported at two levels: High (12) and Detailed (~36). We avoid naming specific clusters in this README to keep the focus on broader patterns.
-
-This README highlights the insights first so you can jump straight into exploration. Then take the workflows and build.
