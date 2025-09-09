@@ -274,3 +274,7 @@ When complete, the app should:
 4. Add URL state management for sharing views
 
 **Score**: 9/10 - Professional data visualization with rich analytics
+
+## 🔗 Live Demo
+
+Explore the deployed app here: [serjoschduering.github.io/kgl-submission-explorer](https://serjoschduering.github.io/kgl-submission-explorer/)

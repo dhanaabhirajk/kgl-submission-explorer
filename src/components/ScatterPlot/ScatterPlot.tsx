@@ -90,11 +90,15 @@ export const ScatterPlot: React.FC<ScatterPlotProps> = ({ width, height }) => {
       });
     });
 
-    // Set up zoom behavior with proper extent
+    // Set up zoom behavior with proper extent and touch support
     const zoom = d3.zoom<SVGSVGElement, unknown>()
       .scaleExtent([0.5, 10])
       .extent([[0, 0], [width, height]])
       .translateExtent([[-width, -height], [width * 2, height * 2]])
+      .filter((event) => {
+        // Allow all events except right-click
+        return !event.ctrlKey && !event.button;
+      })
       .on('zoom', (event) => {
         g.attr('transform', event.transform.toString());
         // Store the current transform

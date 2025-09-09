@@ -16,18 +16,24 @@ function App() {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'explore' | 'statistics'>('explore');
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   // Load data on mount
   useEffect(() => {
     loadData();
   }, [loadData]);
 
-  // Handle window resize
+  // Handle window resize and mobile detection
   useEffect(() => {
-    const sidebarWidth = activeTab === 'statistics' ? 450 : 300;
     const updateDimensions = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      
+      // On mobile, sidebar overlays so full width for canvas
+      const sidebarWidth = mobile ? 0 : (activeTab === 'statistics' ? 450 : 300);
       setDimensions({
-        width: window.innerWidth - sidebarWidth, // Subtract sidebar width
+        width: window.innerWidth - sidebarWidth,
         height: window.innerHeight,
       });
     };
@@ -94,18 +100,41 @@ function App() {
   }
 
   return (
-    <div className="flex h-screen bg-canvas-bg overflow-hidden">
-      {/* Sidebar with animated width */}
+    <div className="flex h-screen bg-canvas-bg overflow-hidden relative">
+      {/* Mobile Menu Button */}
+      {isMobile && (
+        <button
+          onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
+          className="fixed top-4 left-4 z-50 p-2 bg-sidebar-bg border border-gray-700 rounded-lg md:hidden"
+        >
+          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {isMobileSidebarOpen ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
+        </button>
+      )}
+
+      {/* Sidebar with animated width and mobile overlay */}
       <motion.div 
-        className="bg-sidebar-bg border-r border-gray-800 flex flex-col"
+        className={`${isMobile ? 'fixed inset-y-0 left-0 z-40' : ''} bg-sidebar-bg border-r border-gray-800 flex flex-col`}
         initial={false}
-        animate={{ width: activeTab === 'statistics' ? 450 : 300 }}
+        animate={{ 
+          width: isMobile ? (isMobileSidebarOpen ? '85%' : 0) : (activeTab === 'statistics' ? 450 : 300),
+          opacity: isMobile ? (isMobileSidebarOpen ? 1 : 0) : 1
+        }}
         transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+        style={{ 
+          pointerEvents: isMobile && !isMobileSidebarOpen ? 'none' : 'auto',
+          maxWidth: isMobile ? '320px' : 'none'
+        }}
       >
         {/* Header */}
         <div className="p-4 border-b border-gray-800">
-          <h1 className="text-xl font-bold text-white">Hackathon Explorer</h1>
-          <p className="text-sm text-gray-400 mt-1">811 AI Projects</p>
+          <h1 className="text-lg md:text-xl font-bold text-white">Hackathon Explorer</h1>
+          <p className="text-xs md:text-sm text-gray-400 mt-1">811 AI Projects</p>
         </div>
 
         {/* Tab Navigation */}
@@ -122,6 +151,14 @@ function App() {
           <StatsPanel />
         )}
       </motion.div>
+
+      {/* Mobile Overlay for closing sidebar */}
+      {isMobile && isMobileSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
+          onClick={() => setIsMobileSidebarOpen(false)}
+        />
+      )}
 
       {/* Main Canvas */}
       <div className="flex-1 relative">
@@ -210,12 +247,12 @@ function App() {
           </div>
         )}
 
-        {/* LinkedIn badge (icon-only, allows panel to overlap) */}
+        {/* LinkedIn badge (icon-only, hidden on mobile) */}
         <a
           href="https://www.linkedin.com/in/serjoscha-d%C3%BCring-920644173"
           target="_blank"
           rel="noopener noreferrer"
-          className="fixed bottom-4 right-4 z-20"
+          className="hidden md:block fixed bottom-4 right-4 z-20"
           aria-label="Open LinkedIn profile"
           title="LinkedIn"
         >

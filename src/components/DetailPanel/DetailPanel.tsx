@@ -24,7 +24,7 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
           animate={{ x: 0 }}
           exit={{ x: '100%' }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="fixed right-0 top-0 h-full w-[450px] bg-gray-900/95 backdrop-blur-md border-l border-gray-700 shadow-2xl z-50 overflow-hidden flex flex-col"
+          className="fixed right-0 top-0 h-full w-full md:w-[450px] bg-gray-900/95 backdrop-blur-md border-l border-gray-700 shadow-2xl z-50 overflow-hidden flex flex-col"
         >
           {/* Header with image */}
           <div className="relative h-48 bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex-shrink-0">

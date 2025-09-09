@@ -75,16 +75,16 @@ export const ClusterLegend: React.FC = () => {
     <motion.div
       initial={{ width: 300 }}
       animate={{ 
-        width: isCollapsed ? 48 : 300
+        width: isCollapsed ? 48 : (window.innerWidth < 768 ? 200 : 300)
       }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className="absolute top-4 bg-gray-900/90 backdrop-blur-sm border border-gray-700 rounded-lg shadow-xl"
+      className="absolute top-14 md:top-4 bg-gray-900/90 backdrop-blur-sm border border-gray-700 rounded-lg shadow-xl"
       style={{ 
         right: `${rightPosition}px`,
         maxHeight: panelHeight,
         display: 'flex',
         flexDirection: 'column',
-        zIndex: 50
+        zIndex: 30
       }}
     >
       {/* Header */}
