@@ -1,10 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useDataStore } from './store/useDataStore';
 import { ScatterPlot } from './components/ScatterPlot/ScatterPlot';
+import { DetailPanel } from './components/DetailPanel/DetailPanel';
+import { SimilarityPanel } from './components/Sidebar/SimilarityPanel';
+import { SearchBar } from './components/Sidebar/SearchBar';
+import { FilterPanel } from './components/Sidebar/FilterPanel';
+import { ClusterLegend } from './components/Legend/ClusterLegend';
+import { SelectionIndicator } from './components/SelectionIndicator/SelectionIndicator';
 
 function App() {
-  const { loadData, isLoading, error, hoveredProjectId, getProjectById } = useDataStore();
+  const { loadData, isLoading, error, hoveredProjectId, selectedProjectId, setSelectedProjectId, getProjectById } = useDataStore();
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
 
   // Load data on mount
   useEffect(() => {
@@ -25,8 +32,39 @@ function App() {
     return () => window.removeEventListener('resize', updateDimensions);
   }, []);
 
-  // Get hovered project details
+  // Get hovered and selected project details
   const hoveredProject = hoveredProjectId ? getProjectById(hoveredProjectId) : null;
+  const selectedProject = selectedProjectId ? getProjectById(selectedProjectId) : null;
+  const [hoveredPosition, setHoveredPosition] = useState<{x: number, y: number} | null>(null);
+
+  // Handle project selection
+  useEffect(() => {
+    if (selectedProjectId) {
+      setIsDetailOpen(true);
+    } else {
+      setIsDetailOpen(false);
+    }
+  }, [selectedProjectId]);
+
+  // Update tooltip position
+  useEffect(() => {
+    if (!hoveredProjectId) {
+      setHoveredPosition(null);
+      return;
+    }
+    
+    const updatePosition = () => {
+      const pos = (window as any).hoveredPosition;
+      if (pos) {
+        setHoveredPosition(pos);
+      }
+    };
+    
+    updatePosition();
+    const interval = setInterval(updatePosition, 16); // 60fps
+    
+    return () => clearInterval(interval);
+  }, [hoveredProjectId]);
 
   if (isLoading) {
     return (
@@ -61,11 +99,10 @@ function App() {
         </div>
 
         {/* Sidebar Content */}
-        <div className="flex-1 overflow-y-auto p-4">
-          {/* Placeholder for filters and similarity panel */}
-          <div className="text-gray-400 text-sm">
-            <p>Filters and similarity panel coming soon...</p>
-          </div>
+        <div className="flex-1 overflow-y-auto">
+          <SearchBar />
+          <FilterPanel />
+          <SimilarityPanel />
         </div>
       </div>
 
@@ -73,9 +110,34 @@ function App() {
       <div className="flex-1 relative">
         <ScatterPlot width={dimensions.width} height={dimensions.height} />
         
-        {/* Hover Tooltip */}
-        {hoveredProject && (
-          <div className="absolute top-4 right-4 bg-gray-900 border border-gray-700 rounded-lg overflow-hidden max-w-md pointer-events-none shadow-2xl">
+        {/* Cluster Legend */}
+        <ClusterLegend />
+        
+        {/* Selection Indicator */}
+        <SelectionIndicator />
+        
+        {/* Detail Panel */}
+        <DetailPanel
+          project={selectedProject}
+          isOpen={isDetailOpen}
+          onClose={() => {
+            setIsDetailOpen(false);
+            setSelectedProjectId(null);
+          }}
+          onFindSimilar={(projectId) => {
+            setSelectedProjectId(projectId);
+          }}
+        />
+        
+        {/* Hover Tooltip - show even when detail panel is open */}
+        {hoveredProject && hoveredPosition && hoveredProjectId !== selectedProjectId && (
+          <div 
+            className="absolute bg-gray-900 border border-gray-700 rounded-lg overflow-hidden max-w-md pointer-events-none shadow-2xl z-50"
+            style={{
+              left: `${hoveredPosition.x + 15}px`,
+              top: `${hoveredPosition.y - 100}px`,
+              transform: hoveredPosition.x > dimensions.width - 400 ? 'translateX(-100%)' : 'none'
+            }}>
             {hoveredProject.hero_image_url && (
               <div className="w-full h-48 bg-gray-800">
                 <img 

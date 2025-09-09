@@ -1,4 +1,4 @@
-import type { Submission, Cluster, SimilarityData } from '../types.js';
+import type { Submission, Cluster, SimilarityData } from '../types';
 
 class DataLoader {
   private static instance: DataLoader;

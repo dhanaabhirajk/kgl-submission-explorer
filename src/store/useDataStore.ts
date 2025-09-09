@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { Submission, Cluster, SimilarityData } from '../types.js';
+import type { Submission, Cluster, SimilarityData } from '../types';
 import { dataLoader } from '../services/dataLoader';
 
 interface DataState {
@@ -16,12 +16,23 @@ interface DataState {
   selectedProjectId: number | null;
   hoveredProjectId: number | null;
   
+  // Selected cluster
+  selectedClusterId: string | null;
+  
+  // Filtered projects
+  filteredProjectIds: Set<number> | null;
+  
   // Actions
   loadData: () => Promise<void>;
   setSelectedProject: (id: number | null) => void;
+  setSelectedProjectId: (id: number | null) => void;
   setHoveredProject: (id: number | null) => void;
+  setSelectedCluster: (id: string | null) => void;
+  setFilteredProjects: (ids: Set<number> | null) => void;
   getSimilarProjects: (projectId: number) => SimilarityData | undefined;
   getProjectById: (id: number) => Submission | undefined;
+  getClusterById: (id: string) => Cluster | undefined;
+  getClusterMembers: (clusterId: string) => Submission[];
 }
 
 export const useDataStore = create<DataState>((set, get) => ({
@@ -33,6 +44,8 @@ export const useDataStore = create<DataState>((set, get) => ({
   error: null,
   selectedProjectId: null,
   hoveredProjectId: null,
+  selectedClusterId: null,
+  filteredProjectIds: null,
 
   // Load all data
   loadData: async () => {
@@ -61,9 +74,20 @@ export const useDataStore = create<DataState>((set, get) => ({
     }
   },
 
-  // Set selected project
+  // Set selected project (clears cluster selection)
   setSelectedProject: (id: number | null) => {
-    set({ selectedProjectId: id });
+    set({ 
+      selectedProjectId: id,
+      selectedClusterId: null  // Clear cluster selection when selecting a project
+    });
+  },
+
+  // Alias for setSelectedProject
+  setSelectedProjectId: (id: number | null) => {
+    set({ 
+      selectedProjectId: id,
+      selectedClusterId: null  // Clear cluster selection when selecting a project
+    });
   },
 
   // Set hovered project
@@ -81,5 +105,35 @@ export const useDataStore = create<DataState>((set, get) => ({
   getProjectById: (id: number) => {
     const { submissions } = get();
     return submissions.find(s => s.data_point_id === id);
+  },
+
+  // Set selected cluster (clears project selection)
+  setSelectedCluster: (id: string | null) => {
+    set({ 
+      selectedClusterId: id,
+      selectedProjectId: null  // Clear project selection when selecting a cluster
+    });
+  },
+
+  // Get cluster by ID
+  getClusterById: (id: string) => {
+    const { clusters } = get();
+    return clusters.find(c => c.cluster_id === id);
+  },
+
+  // Get all submissions that belong to a cluster
+  getClusterMembers: (clusterId: string) => {
+    const { clusters, submissions } = get();
+    const cluster = clusters.find(c => c.cluster_id === clusterId);
+    if (!cluster) return [];
+    
+    return submissions.filter(s => 
+      cluster.members.includes(s.data_point_id)
+    );
+  },
+
+  // Set filtered projects
+  setFilteredProjects: (ids: Set<number> | null) => {
+    set({ filteredProjectIds: ids });
   },
 }));

@@ -353,28 +353,28 @@ interface DataStructure {
 ## Implementation Roadmap
 
 ### Phase 1: Core Visualization (Week 1)
-- [ ] Setup React + TypeScript + Deck.gl
-- [ ] Implement basic scatter plot
-- [ ] Add zoom/pan controls
-- [ ] Load and render 800 points
+- [x] Setup React + TypeScript + D3.js
+- [x] Implement basic scatter plot
+- [x] Add zoom/pan controls
+- [x] Load and render 811 points
 
 ### Phase 2: Interactivity (Week 2)
-- [ ] Hover tooltips with images
-- [ ] Click for detail modal
-- [ ] Similarity panel
-- [ ] Color scheme toggle
+- [x] Hover tooltips with images
+- [x] Click for detail modal
+- [x] Similarity panel
+- [x] Color scheme by clusters
 
 ### Phase 3: Filtering & Search (Week 3)
-- [ ] Filter panel UI
-- [ ] Filter logic implementation
-- [ ] Keyword search
-- [ ] Search highlighting
+- [x] Filter panel UI
+- [x] Filter logic implementation
+- [x] Keyword search with Fuse.js
+- [x] Search highlighting on plot
 
 ### Phase 4: Polish & Optimization (Week 4)
-- [ ] Topic region overlays
-- [ ] Performance optimization
-- [ ] Mobile responsiveness
-- [ ] Final UI polish
+- [x] Cluster labels on zoom
+- [x] Zoom/pan optimizations
+- [x] Cluster legend component
+- [x] Final UI polish
 
 ---
 
