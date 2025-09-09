@@ -79,12 +79,12 @@ export const FilterPanel: React.FC = () => {
   // Toggle filter
   const toggleFilter = (type: keyof FilterState, value: string | number) => {
     const newFilters = { ...filters };
-    const filterSet = new Set(newFilters[type]);
+    const filterSet = new Set([...newFilters[type]]) as Set<any>;
     
-    if (filterSet.has(value as any)) {
-      filterSet.delete(value as any);
+    if (filterSet.has(value)) {
+      filterSet.delete(value);
     } else {
-      filterSet.add(value as any);
+      filterSet.add(value);
     }
     
     newFilters[type] = filterSet as any;

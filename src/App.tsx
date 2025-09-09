@@ -151,7 +151,7 @@ function App() {
         
         {/* Detail Panel */}
         <DetailPanel
-          project={selectedProject}
+          project={selectedProject || null}
           isOpen={isDetailOpen}
           onClose={() => {
             setIsDetailOpen(false);

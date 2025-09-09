@@ -22,7 +22,6 @@ export const ScatterPlot: React.FC<ScatterPlotProps> = ({ width, height }) => {
     submissions, 
     clusters,
     selectedProjectId, 
-    hoveredProjectId,
     selectedClusterId,
     filteredProjectIds,
     uniqueProjectIds,
@@ -140,7 +139,7 @@ export const ScatterPlot: React.FC<ScatterPlotProps> = ({ width, height }) => {
           g.selectAll('circle')
             .transition()
             .duration(300)
-            .attr('fill', d => {
+            .attr('fill', (d: any) => {
               if (zoomLevel < 2) {
                 // Use high-level cluster colors
                 return highLevelColorMap.get(d.data_point_id) || '#666';
