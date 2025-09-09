@@ -50,10 +50,11 @@ class DataLoader {
 
     try {
       // Load all JSON files in parallel
+      const baseUrl = import.meta.env.BASE_URL || '/';
       const [submissionsRes, clustersRes, similaritiesRes] = await Promise.all([
-        fetch('/data/augmented_original_data_no_embeddings.json'),
-        fetch('/data/consolidated_clusters.json'),
-        fetch('/data/top_50_similar_projects.json'),
+        fetch(`${baseUrl}data/augmented_original_data_no_embeddings.json`),
+        fetch(`${baseUrl}data/consolidated_clusters.json`),
+        fetch(`${baseUrl}data/top_50_similar_projects.json`),
       ]);
 
       // Check for errors
