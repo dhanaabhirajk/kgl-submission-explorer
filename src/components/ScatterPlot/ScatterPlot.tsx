@@ -210,8 +210,8 @@ export const ScatterPlot: React.FC<ScatterPlotProps> = ({ width, height }) => {
       const transform = transformRef.current || d3.zoomIdentity;
       const dataCoords = screenToData(mouseX, mouseY, transform);
 
-      // Calculate proximity radius in data space
-      const proximityRadius = getDataSpaceRadius(45, transform.k);
+      // Calculate proximity radius in data space (reduced by 30% from 45px to ~31px)
+      const proximityRadius = getDataSpaceRadius(31, transform.k);
 
       // Find nearest point within radius
       const nearest = quadtree.find(dataCoords.x, dataCoords.y, proximityRadius);
@@ -234,11 +234,10 @@ export const ScatterPlot: React.FC<ScatterPlotProps> = ({ width, height }) => {
           .duration(150)
           .attr('opacity', 0.4);
 
-        // Highlight the nearest point
+        // Highlight only the nearest point without affecting others
         g.selectAll('circle')
           .filter((d: any) => d.data_point_id === nearest.data_point_id)
-          .attr('r', 6)
-          .attr('fill-opacity', 1);
+          .attr('r', 6);
       } else {
         // No point within proximity
         setHoveredProject(null);
@@ -250,11 +249,20 @@ export const ScatterPlot: React.FC<ScatterPlotProps> = ({ width, height }) => {
           .duration(150)
           .attr('opacity', 0);
 
-        // Reset all circle sizes (except selected)
+        // Reset only previously hovered points (not all points)
+        // This preserves unique project highlighting and other states
         g.selectAll('circle')
-          .filter((d: any) => d.data_point_id !== selectedProjectId)
-          .attr('r', 4)
-          .attr('fill-opacity', 0.85);
+          .each(function(d: any) {
+            const elem = d3.select(this);
+            const currentRadius = parseFloat(elem.attr('r'));
+            
+            // Only reset if it was hover-enlarged and not selected or unique
+            if (currentRadius === 6 && 
+                d.data_point_id !== selectedProjectId && 
+                (!uniqueProjectIds || !uniqueProjectIds.has(d.data_point_id))) {
+              elem.attr('r', 4);
+            }
+          });
       }
     };
 
@@ -280,11 +288,19 @@ export const ScatterPlot: React.FC<ScatterPlotProps> = ({ width, height }) => {
           .attr('opacity', 0);
       }
 
-      // Reset all circle sizes (except selected)
+      // Reset only hover-enlarged circles, preserving unique project highlighting
       g.selectAll('circle')
-        .filter((d: any) => d.data_point_id !== selectedProjectId)
-        .attr('r', 4)
-        .attr('fill-opacity', 0.85);
+        .each(function(d: any) {
+          const elem = d3.select(this);
+          const currentRadius = parseFloat(elem.attr('r'));
+          
+          // Only reset if it's hover-enlarged (6px) and not selected or unique
+          if (currentRadius === 6 && 
+              d.data_point_id !== selectedProjectId && 
+              (!uniqueProjectIds || !uniqueProjectIds.has(d.data_point_id))) {
+            elem.attr('r', 4);
+          }
+        });
     });
 
     // Add high-level cluster labels (using already defined highLevelClusters from above)
