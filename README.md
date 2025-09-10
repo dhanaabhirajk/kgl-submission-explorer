@@ -57,35 +57,13 @@ Multiple background styles make the "project landscape" easier to read depending
 
 ![Visual styles: points, density, island, fantasy](docs/visual_styles.jpg)
 
-### Terrain Visualization Mode
+### Terrain visualization (optional)
 
-The explorer includes an innovative terrain visualization that transforms abstract data points into an intuitive geographical metaphor:
+Turn project density into a simple geographic metaphor to reveal hotspots at a glance.
 
-**How it works:**
-- **Kernel Density Estimation**: Project density is calculated across the UMAP space using Gaussian kernels
-- **Elevation Mapping**: Higher data density = higher terrain elevation
-- **Biome System**: 10 distinct terrain types from ocean (lowest density) to mountain peaks (highest density)
-- **Settlement Detection**: Local density clusters become villages, towns, cities, or metropolises based on project concentration
-
-**Two Visualization Styles:**
-- **Natural**: Ocean → Beach → Desert → Grassland → Forest → Mountains with organic colors
-- **Urban**: Industrial palette transitioning from water to metropolitan areas
-
-**Settlement Overlays:**
-- **Surface Mode**: Visualizes local project density as colored terrain overlays (brown for houses, gray for villages, purple for cities)
-- **Points Mode**: Shows traditional settlement icons at density peaks
-
-**Interactive Controls:**
-- Adjustable biome thresholds to fine-tune terrain generation
-- Settlement visibility and opacity controls
-- Toggle between surface and point settlement displays
-- Export high-resolution terrain maps with comprehensive legends
-
-**Export Features:**
-- Generate publication-ready terrain maps with legends
-- Optional settlement dot overlay for hybrid visualization
-- Two-row legend layout with large, readable text
-- Automatic metadata and timestamp inclusion
+- Density → elevation via KDE over UMAP
+- Two styles (Natural, Urban) with adjustable thresholds and overlays
+- Export high‑res maps with legends; optional settlement dots
 
 ### Uniqueness index (how it's computed)
 
