@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useDataStore } from './store/useDataStore';
 import { ScatterPlot } from './components/ScatterPlot/ScatterPlot';
+import { TerrainScatterPlot } from './components/TerrainScatterPlot/TerrainScatterPlot';
+import { VisualizationControls } from './components/VisualizationControls/VisualizationControls';
+import { SimpleTerrainControls } from './components/VisualizationControls/SimpleTerrainControls';
 import { DetailPanel } from './components/DetailPanel/DetailPanel';
 import { SimilarityPanel } from './components/Sidebar/SimilarityPanel';
 import { SearchBar } from './components/Sidebar/SearchBar';
@@ -10,6 +13,7 @@ import { SidebarTabs } from './components/Sidebar/SidebarTabs';
 import { ClusterLegend } from './components/Legend/ClusterLegend';
 import { SelectionIndicator } from './components/SelectionIndicator/SelectionIndicator';
 import { motion } from 'framer-motion';
+import { Layers, Mountain, Building } from 'lucide-react';
 
 function App() {
   const { loadData, isLoading, error, hoveredProjectId, selectedProjectId, setSelectedProjectId, getProjectById, uniqueProjectIds } = useDataStore();
@@ -18,6 +22,35 @@ function App() {
   const [activeTab, setActiveTab] = useState<'explore' | 'statistics'>('explore');
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [viewMode, setViewMode] = useState<'scatter' | 'terrain'>('terrain');
+  const [showBackgroundImage, setShowBackgroundImage] = useState(true);  // Default to true for terrain
+  const [backgroundImageUrl, setBackgroundImageUrl] = useState<string>('/data/banana_background.jpeg');
+  const [backgroundOpacity, setBackgroundOpacity] = useState(0.45);  // Higher default opacity
+  const [isClusterLegendCollapsed, setIsClusterLegendCollapsed] = useState(false);
+  const [showTerrainHint, setShowTerrainHint] = useState(true);
+  const [isDevelopmentMode] = useState(() => {
+    // Check URL params or localStorage for dev mode
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('dev') === 'true' || localStorage.getItem('devMode') === 'true';
+  });
+  const [terrainSettings, setTerrainSettings] = useState({
+    oceanThreshold: 0.01,  // 1.00% from screenshot
+    shallowWaterThreshold: 0.05,  // 5.00% from screenshot
+    beachThreshold: 0.20,  // 20.00% from screenshot
+    desertThreshold: 0.09,  // 9% from screenshot
+    forestThreshold: 0.35,  // 35% from screenshot
+    mountainThreshold: 0.85,  // 85% from screenshot
+    contourOpacity: 0.3,
+    pointSize: 3,
+    labelOpacity: 0.8,
+    terrainStyle: 'island',
+    showSettlements: true,
+    settlementOpacity: 1.0,  // 100% from screenshot
+    settlementStyle: 'surface',  // Surface selected in screenshot
+    houseThreshold: 0.23,  // 23% from screenshot
+    villageThreshold: 0.35,  // 35% from screenshot
+    cityThreshold: 0.72,  // 72% from screenshot
+  });
 
   // Load data on mount
   useEffect(() => {
@@ -30,8 +63,9 @@ function App() {
       const mobile = window.innerWidth < 768;
       setIsMobile(mobile);
       
-      // On mobile, sidebar overlays so full width for canvas
-      const sidebarWidth = mobile ? 0 : (activeTab === 'statistics' ? 450 : 300);
+      // Use consistent sidebar width to prevent KDE recomputation on tab switch
+      // Always use the max width (450px) to keep canvas dimensions stable
+      const sidebarWidth = mobile ? 0 : 450;
       setDimensions({
         width: window.innerWidth - sidebarWidth,
         height: window.innerHeight,
@@ -41,7 +75,7 @@ function App() {
     updateDimensions();
     window.addEventListener('resize', updateDimensions);
     return () => window.removeEventListener('resize', updateDimensions);
-  }, [activeTab]);
+  }, []); // Remove activeTab dependency to prevent dimension changes on tab switch
 
   // Get hovered and selected project details
   const hoveredProject = hoveredProjectId ? getProjectById(hoveredProjectId) : null;
@@ -76,6 +110,24 @@ function App() {
     
     return () => clearInterval(interval);
   }, [hoveredProjectId]);
+
+  // Sync image overlay with view mode and terrain style
+  useEffect(() => {
+    // Auto-enable image overlay when switching to terrain mode
+    if (viewMode === 'terrain') {
+      setShowBackgroundImage(true);
+    }
+  }, [viewMode, terrainSettings.terrainStyle]);
+
+  // Hide terrain hint after 15 seconds
+  useEffect(() => {
+    if (showTerrainHint && viewMode === 'terrain') {
+      const timer = setTimeout(() => {
+        setShowTerrainHint(false);
+      }, 15000);
+      return () => clearTimeout(timer);
+    }
+  }, [showTerrainHint, viewMode]);
 
   if (isLoading) {
     return (
@@ -162,10 +214,114 @@ function App() {
 
       {/* Main Canvas */}
       <div className="flex-1 relative">
-        <ScatterPlot width={dimensions.width} height={dimensions.height} />
+        {/* Keep both components mounted but hidden to preserve cache */}
+        <div style={{ display: viewMode === 'scatter' ? 'block' : 'none' }}>
+          <ScatterPlot width={dimensions.width} height={dimensions.height} />
+        </div>
+        <div style={{ display: viewMode === 'terrain' ? 'block' : 'none' }}>
+          <TerrainScatterPlot 
+            width={dimensions.width} 
+            height={dimensions.height}
+            settings={terrainSettings}
+            showBackgroundImage={showBackgroundImage}
+            backgroundImageUrl={backgroundImageUrl}
+            backgroundOpacity={backgroundOpacity}
+            isDevelopmentMode={isDevelopmentMode}
+          />
+        </div>
+        
+        {/* View Mode Toggle with Map Style - positioned left of ClusterLegend */}
+        <div className="absolute top-4 z-20" style={{ 
+          right: `${(selectedProjectId ? 466 : 4) + (isClusterLegendCollapsed ? 64 : 316)}px`
+        }}>
+          <div className="flex gap-2">
+            {/* View Mode Toggle */}
+            <div className="bg-gray-900/90 backdrop-blur border border-gray-700 rounded-lg p-1 flex gap-1">
+              <button
+                onClick={() => setViewMode('scatter')}
+                className={`px-4 py-2.5 rounded-md flex items-center gap-2 transition-all font-medium ${
+                  viewMode === 'scatter'
+                    ? 'bg-blue-600 text-white'
+                    : 'text-gray-400 hover:text-white hover:bg-gray-800'
+                }`}
+                title="Points View"
+              >
+                <Layers className="w-4 h-4" />
+                <span className="text-sm">Points</span>
+              </button>
+              <button
+                onClick={() => setViewMode('terrain')}
+                className={`px-4 py-2.5 rounded-md flex items-center gap-2 transition-all font-medium ${
+                  viewMode === 'terrain'
+                    ? 'bg-blue-600 text-white'
+                    : 'text-gray-400 hover:text-white hover:bg-gray-800'
+                }`}
+                title="Terrain View"
+              >
+                <Mountain className="w-4 h-4" />
+                <span className="text-sm">Terrain</span>
+              </button>
+            </div>
+            
+            {/* Map Style Toggle - Only show in terrain mode */}
+            {viewMode === 'terrain' && (
+              <div className="bg-gray-900/90 backdrop-blur border border-gray-700 rounded-lg p-1 flex gap-1">
+                <button
+                  onClick={() => setTerrainSettings({ ...terrainSettings, terrainStyle: 'island' })}
+                  className={`px-3 py-2.5 rounded-md flex items-center gap-2 transition-all font-medium ${
+                    terrainSettings.terrainStyle === 'island'
+                      ? 'bg-blue-600 text-white'
+                      : 'text-gray-400 hover:text-white hover:bg-gray-800'
+                  }`}
+                  title="Island Style"
+                >
+                  <Mountain className="w-4 h-4" />
+                  <span className="text-sm">Island</span>
+                </button>
+                <button
+                  onClick={() => setTerrainSettings({ ...terrainSettings, terrainStyle: 'greyscale' })}
+                  className={`px-3 py-2.5 rounded-md flex items-center gap-2 transition-all font-medium ${
+                    terrainSettings.terrainStyle === 'greyscale'
+                      ? 'bg-blue-600 text-white'
+                      : 'text-gray-400 hover:text-white hover:bg-gray-800'
+                  }`}
+                  title="Greyscale Style"
+                >
+                  <Building className="w-4 h-4" />
+                  <span className="text-sm">Greyscale</span>
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+        
+        {/* Visualization Controls - Show simple or detailed based on dev mode */}
+        {isDevelopmentMode ? (
+          <VisualizationControls
+            viewMode={viewMode}
+            terrainSettings={terrainSettings}
+            onTerrainSettingsChange={setTerrainSettings}
+            showBackgroundImage={showBackgroundImage}
+            backgroundOpacity={backgroundOpacity}
+            onBackgroundToggle={setShowBackgroundImage}
+            onBackgroundOpacityChange={setBackgroundOpacity}
+          />
+        ) : (
+          <SimpleTerrainControls
+            viewMode={viewMode}
+            terrainStyle={terrainSettings.terrainStyle}
+            showBackgroundImage={showBackgroundImage}
+            backgroundOpacity={backgroundOpacity}
+            onTerrainStyleChange={(style) => setTerrainSettings({ ...terrainSettings, terrainStyle: style })}
+            onBackgroundToggle={setShowBackgroundImage}
+            onBackgroundOpacityChange={setBackgroundOpacity}
+            isClusterLegendCollapsed={isClusterLegendCollapsed}
+            isDetailPanelOpen={!!selectedProjectId}
+          />
+        )}
         
         {/* Cluster Legend */}
-        <ClusterLegend />
+        <ClusterLegend onCollapsedChange={setIsClusterLegendCollapsed} />
         
         {/* Selection Indicator */}
         <SelectionIndicator />
@@ -182,6 +338,31 @@ function App() {
               <span className="text-sm text-purple-300">
                 Viewing {uniqueProjectIds.size} Most Unique Projects
               </span>
+            </div>
+          </motion.div>
+        )}
+        
+        {/* Terrain View Hint Message (fixed, top-center of viewport) */}
+        {showTerrainHint && viewMode === 'terrain' && !uniqueProjectIds?.size && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed top-3 left-1/2 -translate-x-1/2 px-6 py-3 bg-gray-900/90 backdrop-blur-sm border border-gray-700 rounded-lg shadow-xl z-50"
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-sm text-gray-300">
+                Wonder what this island is doing here?
+              </span>
+              <button
+                onClick={() => setViewMode('scatter')}
+                className="flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 transition-colors"
+              >
+                Switch to "Points" for a clean view
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
             </div>
           </motion.div>
         )}
