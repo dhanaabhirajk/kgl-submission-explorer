@@ -7,7 +7,7 @@ interface ClusterBarChartProps {
   detailedClusters: ClusterMemberCount[];
 }
 
-export const ClusterBarChart: React.FC<ClusterBarChartProps> = ({ 
+const ClusterBarChartComponent: React.FC<ClusterBarChartProps> = ({ 
   highLevelClusters, 
   detailedClusters 
 }) => {
@@ -132,3 +132,5 @@ export const ClusterBarChart: React.FC<ClusterBarChartProps> = ({
     </div>
   );
 };
+
+export const ClusterBarChart = React.memo(ClusterBarChartComponent);

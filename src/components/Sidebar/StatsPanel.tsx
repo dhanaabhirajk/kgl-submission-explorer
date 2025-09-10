@@ -8,7 +8,7 @@ import { UniquenessHistogram } from '../Charts/UniquenessHistogram';
 import { UniqueProjectsList } from '../Charts/UniqueProjectsList';
 import { InfoTooltip } from '../UI/InfoTooltip';
 
-export const StatsPanel: React.FC = () => {
+const StatsPanelComponent: React.FC = () => {
   const { datasetStats } = useDataStore();
 
   if (!datasetStats) {
@@ -134,3 +134,5 @@ export const StatsPanel: React.FC = () => {
     </div>
   );
 };
+
+export const StatsPanel = React.memo(StatsPanelComponent);

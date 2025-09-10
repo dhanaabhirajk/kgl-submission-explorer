@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import type { Submission, Cluster, SimilarityData } from '../types';
 import { dataLoader } from '../services/dataLoader';
 import { statsService, type DatasetStatistics } from '../services/statsService';
+import { terrainGenerator, type DensityGrid } from '../services/terrainGenerator';
 
 interface DataState {
   // Data
@@ -11,6 +12,12 @@ interface DataState {
   
   // Statistics
   datasetStats: DatasetStatistics | null;
+  
+  // Pre-computed terrain data
+  densityGrid: DensityGrid | null;
+  densityGridDimensions: { width: number; height: number } | null;
+  terrainImageCache: ImageData | null;
+  terrainSettingsCache: any | null;
   
   // Loading state
   isLoading: boolean;
@@ -41,6 +48,8 @@ interface DataState {
   getProjectById: (id: number) => Submission | undefined;
   getClusterById: (id: string) => Cluster | undefined;
   getClusterMembers: (clusterId: string) => Submission[];
+  setTerrainCache: (imageData: ImageData | null, settings: any | null) => void;
+  getTerrainCache: () => { imageData: ImageData | null; settings: any | null };
 }
 
 export const useDataStore = create<DataState>((set, get) => ({
@@ -49,6 +58,10 @@ export const useDataStore = create<DataState>((set, get) => ({
   clusters: [],
   similarities: new Map(),
   datasetStats: null,
+  densityGrid: null,
+  densityGridDimensions: null,
+  terrainImageCache: null,
+  terrainSettingsCache: null,
   isLoading: false,
   error: null,
   selectedProjectId: null,
@@ -77,11 +90,24 @@ export const useDataStore = create<DataState>((set, get) => ({
         similarityMap
       );
       
+      // Pre-compute density grid with default dimensions
+      // Will be recalculated when actual dimensions are known
+      const defaultWidth = 1200;
+      const defaultHeight = 800;
+      const densityGrid = terrainGenerator.calculateDensityGrid(
+        submissions,
+        defaultWidth,
+        defaultHeight
+      );
+      const smoothedGrid = terrainGenerator.smoothDensityGrid(densityGrid, 3);
+      
       set({ 
         submissions, 
         clusters, 
         similarities: similarityMap,
         datasetStats,
+        densityGrid: smoothedGrid,
+        densityGridDimensions: { width: defaultWidth, height: defaultHeight },
         isLoading: false 
       });
     } catch (error) {
@@ -148,6 +174,17 @@ export const useDataStore = create<DataState>((set, get) => ({
     return submissions.filter(s => 
       cluster.members.includes(s.data_point_id)
     );
+  },
+
+  // Set terrain cache
+  setTerrainCache: (imageData: ImageData | null, settings: any | null) => {
+    set({ terrainImageCache: imageData, terrainSettingsCache: settings });
+  },
+
+  // Get terrain cache
+  getTerrainCache: () => {
+    const { terrainImageCache, terrainSettingsCache } = get();
+    return { imageData: terrainImageCache, settings: terrainSettingsCache };
   },
 
   // Set filtered projects

@@ -7,7 +7,7 @@ interface TagDistributionChartProps {
   bottomTags: TagFrequency[];
 }
 
-export const TagDistributionChart: React.FC<TagDistributionChartProps> = ({ 
+const TagDistributionChartComponent: React.FC<TagDistributionChartProps> = ({ 
   topTags, 
   bottomTags 
 }) => {
@@ -117,3 +117,5 @@ export const TagDistributionChart: React.FC<TagDistributionChartProps> = ({
     </div>
   );
 };
+
+export const TagDistributionChart = React.memo(TagDistributionChartComponent);

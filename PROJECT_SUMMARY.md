@@ -25,9 +25,24 @@ An interactive visualization platform for exploring 811 AI hackathon submissions
     └── Contains: top-50 similar projects per submission with scores
 ```
 
-## ✅ What's Been Implemented (v3.0 - Dataset Statistics Dashboard!)
+## ✅ What's Been Implemented (v4.0 - Terrain Visualization!)
 
-### 1. Core Visualization (`/src/components/ScatterPlot/ScatterPlot.tsx`)
+### 1. Terrain Visualization System (NEW in v4.0!)
+- ✅ **Terrain View Mode** (`/src/components/TerrainScatterPlot/TerrainScatterPlot.tsx`) - Geographic map-like visualization
+- ✅ **2D Kernel Density Estimation** - Dynamic terrain generation based on project density
+- ✅ **Two-level density system** - Global density for terrain, local for settlement detection
+- ✅ **Dynamic biomes** - Ocean, shallow water, desert, grassland, forest, mountains, snow peaks
+- ✅ **Settlement overlay** - Dense project clusters appear as villages/cities
+- ✅ **Natural/Urban styles** - Toggle between organic and city-themed visualizations
+- ✅ **Real-time controls** (`/src/components/VisualizationControls/VisualizationControls.tsx`)
+  - Adjustable biome thresholds (ocean, desert, forest, mountain)
+  - Contour line opacity control
+  - Point size adjustment
+  - Label visibility slider
+- ✅ **Full interaction parity** - All hover, selection, and tooltip features from scatter plot
+- ✅ **Optimized rendering** - Canvas for terrain, SVG overlay for interactions
+
+### 2. Core Visualization (`/src/components/ScatterPlot/ScatterPlot.tsx`)
 - ✅ **D3.js scatter plot** rendering 811 dots
 - ✅ **UMAP positioning** - Projects positioned by pre-computed coordinates
 - ✅ **Cluster coloring** - Each dot colored by its cluster assignment
@@ -49,7 +64,7 @@ An interactive visualization platform for exploring 811 AI hackathon submissions
 - ✅ **Error handling** - Loading states and error display
 
 ### 3. User Interface Components
-- ✅ **Main App Layout** (`/src/App.tsx`) - Tabbed sidebar + canvas architecture (v3.0)
+- ✅ **Main App Layout** (`/src/App.tsx`) - Tabbed sidebar + canvas with view mode toggle (v4.0)
 - ✅ **Detail Panel** (`/src/components/DetailPanel/DetailPanel.tsx`) - 450px right sidebar with spring animations
 - ✅ **Similarity Panel** (`/src/components/Sidebar/SimilarityPanel.tsx`) - Shows top-8 similar projects
 - ✅ **Search Bar** (`/src/components/Sidebar/SearchBar.tsx`) - Fuzzy search with Fuse.js
@@ -86,6 +101,10 @@ kgl-submission-explorer/
 │   ├── components/
 │   │   ├── ScatterPlot/
 │   │   │   └── ScatterPlot.tsx        # D3 visualization with zoom/pan (175 lines)
+│   │   ├── TerrainScatterPlot/
+│   │   │   └── TerrainScatterPlot.tsx # Terrain visualization (500+ lines) [NEW v4.0]
+│   │   ├── VisualizationControls/
+│   │   │   └── VisualizationControls.tsx # Terrain settings UI (288 lines) [NEW v4.0]
 │   │   ├── Modal/
 │   │   │   └── ProjectDetail.tsx      # Detailed project modal (165 lines)
 │   │   ├── Sidebar/
@@ -96,11 +115,12 @@ kgl-submission-explorer/
 │   │       └── ClusterLegend.tsx      # Interactive cluster legend (105 lines)
 │   ├── services/
 │   │   ├── dataLoader.ts              # Data fetching service (115 lines)
-│   │   └── searchService.ts           # Search service with Fuse.js (50 lines)
+│   │   ├── searchService.ts           # Search service with Fuse.js (50 lines)
+│   │   └── terrainGenerator.ts        # Terrain generation with KDE (250+ lines) [NEW v4.0]
 │   ├── store/
 │   │   └── useDataStore.ts            # Zustand state store (90 lines)
 │   ├── types.ts                       # TypeScript interfaces (50 lines)
-│   ├── App.tsx                        # Main app component (160 lines)
+│   ├── App.tsx                        # Main app component (329 lines) [UPDATED v4.0]
 │   ├── main.tsx                       # React entry point
 │   └── index.css                      # Tailwind imports
 ├── public/
@@ -221,10 +241,12 @@ npm install -D @types/fuse.js
 ## 🎨 Design Decisions
 
 1. **D3.js over Deck.gl**: Simpler for 811 points, no WebGL complexity needed
-2. **SVG over Canvas**: Better for interactions and accessibility
+2. **Hybrid Canvas/SVG**: Canvas for terrain rendering, SVG for interactions (v4.0)
 3. **Zustand over Redux**: Lighter weight for our needs
 4. **Static JSON over API**: No backend needed, instant loading
 5. **Tailwind v3**: Stable, well-documented, extensive ecosystem
+6. **2D KDE for Terrain**: Efficient density estimation for map-like visualization (v4.0)
+7. **Two-level Density**: Global for terrain, local for settlement detection (v4.0)
 
 ## 📈 Success Metrics
 
@@ -244,17 +266,25 @@ When complete, the app should:
 
 ---
 
-**Current Status**: ~95% complete (v3.0 with Dataset Statistics Dashboard!)
+**Current Status**: ~98% complete (v4.0 with Terrain Visualization!)
 
-**Latest Features (v3.0 - Statistics Dashboard!)**:
+**Latest Features (v4.0 - Terrain Visualization!)**:
+- ✅ **Geographic Map View** - Transform scatter plot into intuitive terrain visualization
+- ✅ **2D Kernel Density Estimation** - Generate terrain based on project density distributions
+- ✅ **Two-level Density System** - Global density for terrain, local for settlement detection
+- ✅ **Dynamic Biome System** - 7 biomes from ocean to snow peaks that adjust in real-time
+- ✅ **Settlement Detection** - Dense clusters appear as villages/cities on the map
+- ✅ **Natural/Urban Styles** - Toggle between organic terrain and city-themed visualization
+- ✅ **Real-time Controls** - Adjust biome thresholds, contours, and visual settings on-the-fly
+- ✅ **Full Interaction Parity** - All hover, selection, and tooltip features work identically
+
+**Previous v3.0 Features (Statistics Dashboard)**:
 - ✅ **Comprehensive Analytics Dashboard** - Beautiful statistics visualization with D3.js charts
 - ✅ **Tabbed Sidebar Navigation** - Switch between Explore and Statistics modes
 - ✅ **Tag Distribution Analysis** - Top 20/Bottom 10 tags with frequency counts
-- ✅ **Cluster Member Distribution** - Visual breakdown of 12 high-level and 36 detailed clusters
+- ✅ **Cluster Member Distribution** - Visual breakdown of clusters
 - ✅ **Uniqueness Analysis** - Histogram and list of 25 most unique projects
-- ✅ **Interactive Highlighting** - Highlight most unique projects on canvas with purple glow
-- ✅ **Animated Width Transitions** - Sidebar expands smoothly from 300px to 450px
-- ✅ **Duplicate Cluster Fix** - Properly handles duplicate cluster names in data
+- ✅ **Interactive Highlighting** - Highlight most unique projects on canvas
 
 **Previous v2.1 Improvements**:
 - ✅ Camera state preservation - No jumping when selecting items
@@ -273,7 +303,7 @@ When complete, the app should:
 3. Add collision detection for cluster labels
 4. Add URL state management for sharing views
 
-**Score**: 9/10 - Professional data visualization with rich analytics
+**Score**: 9.5/10 - Professional data visualization with terrain view and rich analytics
 
 ## 🔗 Live Demo
 

@@ -6,7 +6,7 @@ interface CategoryChartProps {
   categories: CategoryFrequency[];
 }
 
-export const CategoryChart: React.FC<CategoryChartProps> = ({ categories }) => {
+const CategoryChartComponent: React.FC<CategoryChartProps> = ({ categories }) => {
   const chartRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
@@ -115,3 +115,5 @@ export const CategoryChart: React.FC<CategoryChartProps> = ({ categories }) => {
     </div>
   );
 };
+
+export const CategoryChart = React.memo(CategoryChartComponent);

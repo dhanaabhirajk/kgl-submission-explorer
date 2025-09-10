@@ -3,7 +3,11 @@ import { useDataStore } from '../../store/useDataStore';
 import { ChevronLeft, ChevronRight, Layers, BarChart3, X, Users } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export const ClusterLegend: React.FC = () => {
+interface ClusterLegendProps {
+  onCollapsedChange?: (collapsed: boolean) => void;
+}
+
+export const ClusterLegend: React.FC<ClusterLegendProps> = ({ onCollapsedChange }) => {
   const { 
     clusters, 
     selectedClusterId, 
@@ -14,6 +18,11 @@ export const ClusterLegend: React.FC = () => {
   } = useDataStore();
   
   const [isCollapsed, setIsCollapsed] = useState(false);
+  
+  const handleSetCollapsed = (collapsed: boolean) => {
+    setIsCollapsed(collapsed);
+    onCollapsedChange?.(collapsed);
+  };
   const [selectedLevel, setSelectedLevel] = useState<'High' | 'Detailed'>('Detailed');
   const [showDetails, setShowDetails] = useState(false);
   const [activeTab, setActiveTab] = useState<'members' | 'stats'>('members');
@@ -65,8 +74,8 @@ export const ClusterLegend: React.FC = () => {
     };
   }, [selectedCluster, clusterMembers]);
 
-  // Adjust position based on detail panel
-  const rightPosition = selectedProjectId ? 470 : 4;
+  // Adjust position based on detail panel (450px panel width + 16px gap)
+  const rightPosition = selectedProjectId ? 466 : 4;
   
   // Calculate dynamic height when cluster is selected
   const panelHeight = selectedClusterId && showDetails ? 'calc(100vh - 100px)' : 'auto';
@@ -93,7 +102,7 @@ export const ClusterLegend: React.FC = () => {
           <>
             <Layers className="w-4 h-4 text-purple-400" />
             <button
-              onClick={() => setIsCollapsed(false)}
+              onClick={() => handleSetCollapsed(false)}
               className="p-1 hover:bg-gray-700 rounded transition-colors"
               title="Expand Cluster Legend"
             >
@@ -107,7 +116,7 @@ export const ClusterLegend: React.FC = () => {
               <span className="text-white font-medium">Cluster Legend</span>
             </div>
             <button
-              onClick={() => setIsCollapsed(true)}
+              onClick={() => handleSetCollapsed(true)}
               className="p-1.5 hover:bg-gray-700 rounded transition-colors"
               title="Collapse Cluster Legend"
             >
