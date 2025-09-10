@@ -342,17 +342,19 @@ function App() {
           </motion.div>
         )}
         
-        {/* Terrain View Hint (absolute, centered over visible canvas area) */}
+        {/* Terrain View Hint (absolute, placed at left third of visible canvas) */}
         {showTerrainHint && viewMode === 'terrain' && !uniqueProjectIds?.size && (
           (() => {
             const overlayRightPx = (isClusterLegendCollapsed ? 64 : 316) + (selectedProjectId ? 466 : 0);
+            const effectiveWidth = Math.max(0, dimensions.width - overlayRightPx);
+            const leftThirdPx = effectiveWidth * 0.33; // place around left-third
             return (
               <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="absolute top-3 left-1/2 -translate-x-1/2 px-6 py-3 bg-gray-900/90 backdrop-blur-sm border border-gray-700 rounded-lg shadow-xl z-50"
-                style={{ left: `calc(50% - ${overlayRightPx / 2}px)` }}
+                className="absolute top-3 px-6 py-3 bg-gray-900/90 backdrop-blur-sm border border-gray-700 rounded-lg shadow-xl z-50"
+                style={{ left: `${leftThirdPx}px` }}
               >
             <div className="flex items-center gap-3">
               <span className="text-sm text-gray-300">
