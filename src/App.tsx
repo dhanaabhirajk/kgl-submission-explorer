@@ -119,12 +119,12 @@ function App() {
     }
   }, [viewMode, terrainSettings.terrainStyle]);
 
-  // Hide terrain hint after 15 seconds
+  // Hide terrain hint after 23 seconds
   useEffect(() => {
     if (showTerrainHint && viewMode === 'terrain') {
       const timer = setTimeout(() => {
         setShowTerrainHint(false);
-      }, 15000);
+      }, 23000);
       return () => clearTimeout(timer);
     }
   }, [showTerrainHint, viewMode]);
@@ -353,19 +353,19 @@ function App() {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="absolute top-2 px-3 py-2 bg-gray-900/90 backdrop-blur-sm border border-gray-700 rounded-lg shadow-xl z-50"
+                className="absolute top-2 px-4 py-2 bg-gray-900/90 backdrop-blur-sm border border-gray-700 rounded-lg shadow-xl z-50"
                 style={{ left: `${leftEdge}px` }}
               >
             <div className="flex items-center gap-2">
-              <span className="text-xs text-gray-300">
+              <span className="text-sm text-gray-300">
                 Wonder what this island is doing here?
               </span>
               <button
                 onClick={() => setViewMode('scatter')}
-                className="flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 transition-colors"
+                className="flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 transition-colors"
               >
                 Switch to "Points" for a clean view
-                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </button>
