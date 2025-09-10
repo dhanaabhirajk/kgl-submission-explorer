@@ -42,13 +42,55 @@ Short version of the workflow that prepared this dataset:
 ### What you can do
 
 - **Explore**: Zoomable D3 scatter plot, cluster coloring, hover/click interactions, and similar-project highlighting.
+- **Visualize as Terrain**: Transform the data landscape into an intuitive geographical map where data density creates terrain elevation — from oceans to mountain peaks. Settlement overlays show concentrated project areas as villages, towns, and cities.
 - **Analyze**: Stats dashboard for tag distribution, category breakdown, high-level and detailed cluster distributions, uniqueness histogram, and a top-25 most-unique list.
 - **Act**: Use the Nano Banana workflow library to quickly prototype pipelines that mirror the observed patterns (image/video transforms, multimodal assembly, personalization loops, design tooling).
 
-### Uniqueness index (how it’s computed)
+### Visual styles for navigation
+
+Multiple background styles make the "project landscape" easier to read depending on task:
+
+- Points (default) — pure scatter for maximum clarity
+- Density background — soft contours reveal hotspots
+- Island background — geographic metaphor over density
+- Fantasy map (nano‑banana) — playful, readable world map skin for presentations
+
+![Visual styles: points, density, island, fantasy](docs/visual_styles.jpg)
+
+### Terrain Visualization Mode
+
+The explorer includes an innovative terrain visualization that transforms abstract data points into an intuitive geographical metaphor:
+
+**How it works:**
+- **Kernel Density Estimation**: Project density is calculated across the UMAP space using Gaussian kernels
+- **Elevation Mapping**: Higher data density = higher terrain elevation
+- **Biome System**: 10 distinct terrain types from ocean (lowest density) to mountain peaks (highest density)
+- **Settlement Detection**: Local density clusters become villages, towns, cities, or metropolises based on project concentration
+
+**Two Visualization Styles:**
+- **Natural**: Ocean → Beach → Desert → Grassland → Forest → Mountains with organic colors
+- **Urban**: Industrial palette transitioning from water to metropolitan areas
+
+**Settlement Overlays:**
+- **Surface Mode**: Visualizes local project density as colored terrain overlays (brown for houses, gray for villages, purple for cities)
+- **Points Mode**: Shows traditional settlement icons at density peaks
+
+**Interactive Controls:**
+- Adjustable biome thresholds to fine-tune terrain generation
+- Settlement visibility and opacity controls
+- Toggle between surface and point settlement displays
+- Export high-resolution terrain maps with comprehensive legends
+
+**Export Features:**
+- Generate publication-ready terrain maps with legends
+- Optional settlement dot overlay for hybrid visualization
+- Two-row legend layout with large, readable text
+- Automatic metadata and timestamp inclusion
+
+### Uniqueness index (how it's computed)
 
 - Definition: The average cosine similarity to the 50 most similar projects, measured on the embedding vectors derived from the generated standardized descriptions.
-- Interpretation: Lower average similarity ⇒ fewer close neighbors in description space (more “unique”). This is not a quality judgment — just a positioning signal.
+- Interpretation: Lower average similarity ⇒ fewer close neighbors in description space (more "unique"). This is not a quality judgment — just a positioning signal.
 
 ### Live Demo
 
