@@ -1,7 +1,10 @@
 import { Delaunay } from 'd3-delaunay';
 import { createNoise2D } from 'simplex-noise';
-import concaveman from 'concaveman';
-import type { Submission, Cluster, MapPolygon } from '../types';
+// concaveman lacks types in DefinitelyTyped
+import concavemanDefault from 'concaveman';
+const concaveman = concavemanDefault as unknown as (points: [number, number][], concavity?: number, lengthThreshold?: number) => [number, number][];
+import type { Submission, Cluster } from '../types';
+import type { MapPolygon } from '../types/index';
 
 export class MapGenerator {
   private noise2D = createNoise2D();

@@ -635,4 +635,3 @@ export class TerrainGenerator {
 }
 
 export const terrainGenerator = new TerrainGenerator();
-export type { DensityGrid, Biome, TerrainSettings };

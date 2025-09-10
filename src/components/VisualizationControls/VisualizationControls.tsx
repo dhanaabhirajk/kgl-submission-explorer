@@ -1,5 +1,6 @@
 import React from 'react';
-import { ChevronDown, ChevronUp, Sliders, Trees, Building, Home, MapPin, Image } from 'lucide-react';
+import type { TerrainSettings } from '../../services/terrainGenerator';
+import { ChevronDown, ChevronUp, Sliders, Trees, Building, Home, MapPin } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface VisualizationControlsProps {
@@ -8,25 +9,8 @@ interface VisualizationControlsProps {
   backgroundOpacity?: number;
   onBackgroundToggle?: (show: boolean) => void;
   onBackgroundOpacityChange?: (opacity: number) => void;
-  terrainSettings: {
-    oceanThreshold: number;
-    shallowWaterThreshold?: number;
-    beachThreshold?: number;
-    desertThreshold: number;
-    forestThreshold: number;
-    mountainThreshold: number;
-    contourOpacity: number;
-    pointSize: number;
-    labelOpacity: number;
-    terrainStyle?: 'island' | 'greyscale';
-    showSettlements?: boolean;
-    settlementOpacity?: number;
-    settlementStyle?: 'points' | 'surface';
-    houseThreshold?: number;
-    villageThreshold?: number;
-    cityThreshold?: number;
-  };
-  onTerrainSettingsChange: (settings: any) => void;
+  terrainSettings: TerrainSettings;
+  onTerrainSettingsChange: (settings: TerrainSettings) => void;
 }
 
 export const VisualizationControls: React.FC<VisualizationControlsProps> = ({
@@ -42,7 +26,7 @@ export const VisualizationControls: React.FC<VisualizationControlsProps> = ({
 
   if (viewMode === 'scatter') return null;
 
-  const handleSliderChange = (key: string, value: number) => {
+  const handleSliderChange = (key: keyof TerrainSettings, value: TerrainSettings[keyof TerrainSettings]) => {
     onTerrainSettingsChange({
       ...terrainSettings,
       [key]: value,
@@ -52,7 +36,7 @@ export const VisualizationControls: React.FC<VisualizationControlsProps> = ({
   const handleStyleChange = (style: 'natural' | 'urban') => {
     onTerrainSettingsChange({
       ...terrainSettings,
-      terrainStyle: style,
+      terrainStyle: style === 'urban' ? 'greyscale' : 'island',
     });
   };
 
@@ -97,7 +81,7 @@ export const VisualizationControls: React.FC<VisualizationControlsProps> = ({
                   <button
                     onClick={() => handleStyleChange('natural')}
                     className={`px-3 py-2 rounded-lg flex items-center justify-center gap-2 transition-all text-xs ${
-                      (!terrainSettings.terrainStyle || terrainSettings.terrainStyle === 'natural')
+                      (!terrainSettings.terrainStyle || terrainSettings.terrainStyle === 'island')
                         ? 'bg-blue-600 text-white'
                         : 'bg-gray-800 text-gray-400 hover:text-white'
                     }`}
@@ -108,7 +92,7 @@ export const VisualizationControls: React.FC<VisualizationControlsProps> = ({
                   <button
                     onClick={() => handleStyleChange('urban')}
                     className={`px-3 py-2 rounded-lg flex items-center justify-center gap-2 transition-all text-xs ${
-                      terrainSettings.terrainStyle === 'urban'
+                      terrainSettings.terrainStyle === 'greyscale'
                         ? 'bg-blue-600 text-white'
                         : 'bg-gray-800 text-gray-400 hover:text-white'
                     }`}
@@ -120,7 +104,7 @@ export const VisualizationControls: React.FC<VisualizationControlsProps> = ({
               </div>
 
               {/* Biome Thresholds - Only for Natural Style */}
-              {(!terrainSettings.terrainStyle || terrainSettings.terrainStyle === 'natural') && (
+              {(!terrainSettings.terrainStyle || terrainSettings.terrainStyle === 'island') && (
                 <div className="space-y-3">
                   <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
                     Biome Thresholds
@@ -421,7 +405,7 @@ export const VisualizationControls: React.FC<VisualizationControlsProps> = ({
                     <div className="flex justify-between items-center mb-1">
                       <label className="text-xs text-gray-300">Contour Lines</label>
                       <span className="text-xs text-gray-500">
-                        {Math.round(terrainSettings.contourOpacity * 100)}%
+                        {Math.round((terrainSettings.contourOpacity ?? 0.3) * 100)}%
                       </span>
                     </div>
                     <input
@@ -429,7 +413,7 @@ export const VisualizationControls: React.FC<VisualizationControlsProps> = ({
                       min="0"
                       max="1"
                       step="0.05"
-                      value={terrainSettings.contourOpacity}
+                      value={terrainSettings.contourOpacity ?? 0.3}
                       onChange={(e) => handleSliderChange('contourOpacity', parseFloat(e.target.value))}
                       className="w-full h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer slider"
                     />
@@ -439,7 +423,7 @@ export const VisualizationControls: React.FC<VisualizationControlsProps> = ({
                     <div className="flex justify-between items-center mb-1">
                       <label className="text-xs text-gray-300">Point Size</label>
                       <span className="text-xs text-gray-500">
-                        {terrainSettings.pointSize}px
+                        {(terrainSettings.pointSize ?? 3)}px
                       </span>
                     </div>
                     <input
@@ -447,7 +431,7 @@ export const VisualizationControls: React.FC<VisualizationControlsProps> = ({
                       min="1"
                       max="8"
                       step="0.5"
-                      value={terrainSettings.pointSize}
+                      value={terrainSettings.pointSize ?? 3}
                       onChange={(e) => handleSliderChange('pointSize', parseFloat(e.target.value))}
                       className="w-full h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer slider"
                     />
@@ -457,7 +441,7 @@ export const VisualizationControls: React.FC<VisualizationControlsProps> = ({
                     <div className="flex justify-between items-center mb-1">
                       <label className="text-xs text-gray-300">Label Visibility</label>
                       <span className="text-xs text-gray-500">
-                        {Math.round(terrainSettings.labelOpacity * 100)}%
+                        {Math.round((terrainSettings.labelOpacity ?? 0.8) * 100)}%
                       </span>
                     </div>
                     <input
@@ -465,7 +449,7 @@ export const VisualizationControls: React.FC<VisualizationControlsProps> = ({
                       min="0"
                       max="1"
                       step="0.05"
-                      value={terrainSettings.labelOpacity}
+                      value={terrainSettings.labelOpacity ?? 0.8}
                       onChange={(e) => handleSliderChange('labelOpacity', parseFloat(e.target.value))}
                       className="w-full h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer slider"
                     />
@@ -497,7 +481,7 @@ export const VisualizationControls: React.FC<VisualizationControlsProps> = ({
                       contourOpacity: 0.3,
                       pointSize: 3,
                       labelOpacity: 0.8,
-                      terrainStyle: 'natural',
+                      terrainStyle: 'island',
                       showSettlements: true,
                       settlementOpacity: 1.0,
                       settlementStyle: 'surface',

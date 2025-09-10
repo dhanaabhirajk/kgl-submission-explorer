@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDataStore } from './store/useDataStore';
 import { ScatterPlot } from './components/ScatterPlot/ScatterPlot';
 import { TerrainScatterPlot } from './components/TerrainScatterPlot/TerrainScatterPlot';
+import type { TerrainSettings } from './services/terrainGenerator';
 import { VisualizationControls } from './components/VisualizationControls/VisualizationControls';
 import { SimpleTerrainControls } from './components/VisualizationControls/SimpleTerrainControls';
 import { DetailPanel } from './components/DetailPanel/DetailPanel';
@@ -33,7 +34,7 @@ function App() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('dev') === 'true' || localStorage.getItem('devMode') === 'true';
   });
-  const [terrainSettings, setTerrainSettings] = useState({
+  const [terrainSettings, setTerrainSettings] = useState<TerrainSettings>({
     oceanThreshold: 0.01,  // 1.00% from screenshot
     shallowWaterThreshold: 0.05,  // 5.00% from screenshot
     beachThreshold: 0.20,  // 20.00% from screenshot
@@ -43,10 +44,10 @@ function App() {
     contourOpacity: 0.3,
     pointSize: 3,
     labelOpacity: 0.8,
-    terrainStyle: 'island' as 'island',
+    terrainStyle: 'island',
     showSettlements: true,
     settlementOpacity: 1.0,  // 100% from screenshot
-    settlementStyle: 'surface' as 'surface',  // Surface selected in screenshot
+    settlementStyle: 'surface',  // Surface selected in screenshot
     houseThreshold: 0.23,  // 23% from screenshot
     villageThreshold: 0.35,  // 35% from screenshot
     cityThreshold: 0.72,  // 72% from screenshot
@@ -299,7 +300,7 @@ function App() {
         {isDevelopmentMode ? (
           <VisualizationControls
             viewMode={viewMode}
-            terrainSettings={terrainSettings}
+            terrainSettings={terrainSettings as TerrainSettings}
             onTerrainSettingsChange={setTerrainSettings}
             showBackgroundImage={showBackgroundImage}
             backgroundOpacity={backgroundOpacity}
