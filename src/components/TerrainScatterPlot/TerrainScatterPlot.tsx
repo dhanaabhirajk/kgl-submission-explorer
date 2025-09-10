@@ -124,7 +124,7 @@ export const TerrainScatterPlot: React.FC<TerrainScatterPlotProps> = ({
   }, [clusters]);
 
   // Render terrain to offscreen canvas with settings
-  const terrainImageData = useMemo(() => {
+  const terrainImageData = useMemo((): ImageData | { imageData: ImageData; needsCache: boolean } | null => {
     if (!densityGrid) return null;
     
     // Check cache first
@@ -206,14 +206,17 @@ export const TerrainScatterPlot: React.FC<TerrainScatterPlotProps> = ({
     
     // Get the ImageData - will be cached in useEffect
     const imageData = ctx.getImageData(0, 0, width, height);
-    
+    // Return object so we can cache, but downstream code guards for both
     return { imageData, needsCache: true };
   }, [densityGrid, settlementGrid, width, height, settings, getTerrainCache]);
 
   // Cache terrain data when it changes
   useEffect(() => {
-    if (terrainImageData && terrainImageData.needsCache) {
-      setTerrainCache(terrainImageData.imageData, settings);
+    if (!terrainImageData) return;
+    const needsCache = (terrainImageData as any).needsCache as boolean | undefined;
+    if (needsCache) {
+      const img = (terrainImageData as any).imageData as ImageData;
+      setTerrainCache(img, settings);
     }
   }, [terrainImageData, settings, setTerrainCache]);
 
@@ -222,7 +225,7 @@ export const TerrainScatterPlot: React.FC<TerrainScatterPlotProps> = ({
     if (!terrainImageData) return;
     
     // Handle both old and new terrainImageData structure
-    const imageData = terrainImageData.imageData || terrainImageData;
+    const imageData: ImageData = (terrainImageData as any).imageData || (terrainImageData as ImageData);
     
     // 1. Create MAP canvas (exact proportions preserved)
     const mapCanvas = document.createElement('canvas');
@@ -446,10 +449,12 @@ export const TerrainScatterPlot: React.FC<TerrainScatterPlotProps> = ({
     };
   }, [exportTerrainImage]);
 
-  // Cache terrain to avoid recomputation and handle state update
+  // Cache terrain to avoid recomputation and handle state update (handles both shapes)
   useEffect(() => {
-    if (terrainImageData && terrainImageData.needsCache) {
-      setTerrainCache(terrainImageData.imageData, settings);
+    if (!terrainImageData) return;
+    const data: any = terrainImageData as any;
+    if (data && data.needsCache && data.imageData) {
+      setTerrainCache(data.imageData as ImageData, settings);
     }
   }, [terrainImageData, settings, setTerrainCache]);
 
@@ -481,8 +486,8 @@ export const TerrainScatterPlot: React.FC<TerrainScatterPlotProps> = ({
     canvas.height = height;
     
     // Create a temporary canvas from ImageData for drawImage and store in ref
-    const tempCanvas = document.createElement('canvas');
-    const imageData = terrainImageData.imageData || terrainImageData;
+    const tempCanvas: HTMLCanvasElement = document.createElement('canvas');
+    const imageData: ImageData = (terrainImageData as any).imageData || (terrainImageData as ImageData);
     tempCanvas.width = imageData.width;
     tempCanvas.height = imageData.height;
     const tempCtx = tempCanvas.getContext('2d');
@@ -501,7 +506,9 @@ export const TerrainScatterPlot: React.FC<TerrainScatterPlotProps> = ({
       ctx.scale(transform.k, transform.k);
       
       // Draw terrain
-      ctx.drawImage(tempCanvasRef.current, 0, 0);
+      if (tempCanvasRef.current) {
+        ctx.drawImage(tempCanvasRef.current as HTMLCanvasElement, 0, 0);
+      }
       
       // Draw AI overlay on top if available - match terrain canvas size (only in island mode)
       if (showBackgroundImage && overlayImageRef.current && tempCanvasRef.current && settings?.terrainStyle === 'island') {

@@ -43,10 +43,10 @@ function App() {
     contourOpacity: 0.3,
     pointSize: 3,
     labelOpacity: 0.8,
-    terrainStyle: 'island',
+    terrainStyle: 'island' as 'island',
     showSettlements: true,
     settlementOpacity: 1.0,  // 100% from screenshot
-    settlementStyle: 'surface',  // Surface selected in screenshot
+    settlementStyle: 'surface' as 'surface',  // Surface selected in screenshot
     houseThreshold: 0.23,  // 23% from screenshot
     villageThreshold: 0.35,  // 35% from screenshot
     cityThreshold: 0.72,  // 72% from screenshot
@@ -312,7 +312,7 @@ function App() {
             terrainStyle={terrainSettings.terrainStyle}
             showBackgroundImage={showBackgroundImage}
             backgroundOpacity={backgroundOpacity}
-            onTerrainStyleChange={(style) => setTerrainSettings({ ...terrainSettings, terrainStyle: style })}
+            onTerrainStyleChange={(style) => setTerrainSettings({ ...terrainSettings, terrainStyle: style as 'island' | 'greyscale' })}
             onBackgroundToggle={setShowBackgroundImage}
             onBackgroundOpacityChange={setBackgroundOpacity}
             isClusterLegendCollapsed={isClusterLegendCollapsed}

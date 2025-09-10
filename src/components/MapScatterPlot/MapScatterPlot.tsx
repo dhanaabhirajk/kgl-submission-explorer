@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useMemo } from 'react';
 import * as d3 from 'd3';
 import { useDataStore } from '../../store/useDataStore';
 import { mapGenerator } from '../../services/mapGenerator';
-import type { Submission, MapPolygon } from '../../types';
+import type { Submission } from '../../types';
+import type { MapPolygon } from '../../types/index';
 
 interface MapScatterPlotProps {
   width: number;
@@ -154,7 +155,7 @@ export const MapScatterPlot: React.FC<MapScatterPlotProps> = ({ width, height })
     // Create land polygons with organic borders
     landGroups.each(function(d) {
       const group = d3.select(this);
-      const scaledPoints = d.points.map(p => [xScale(p[0]), yScale(p[1])]);
+      const scaledPoints = d.points.map((p: [number, number]) => [xScale(p[0]), yScale(p[1])]);
       
       // Main landmass
       group.append('path')
@@ -250,11 +251,11 @@ export const MapScatterPlot: React.FC<MapScatterPlotProps> = ({ width, height })
       .append('text')
       .attr('class', 'island-label')
       .attr('x', d => {
-        const centerX = d.points.reduce((sum, p) => sum + p[0], 0) / d.points.length;
+        const centerX = d.points.reduce((sum: number, p: [number, number]) => sum + p[0], 0) / d.points.length;
         return xScale(centerX);
       })
       .attr('y', d => {
-        const centerY = d.points.reduce((sum, p) => sum + p[1], 0) / d.points.length;
+        const centerY = d.points.reduce((sum: number, p: [number, number]) => sum + p[1], 0) / d.points.length;
         return yScale(centerY);
       })
       .attr('text-anchor', 'middle')
