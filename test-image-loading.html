@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Loading Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #1a1a1a;
+            color: white;
+        }
+        .test-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .test-case {
+            border: 1px solid #444;
+            padding: 15px;
+            border-radius: 8px;
+            background: #2a2a2a;
+        }
+        .test-case h3 {
+            margin: 0 0 10px 0;
+            color: #4fc3f7;
+        }
+        .image-container {
+            width: 100%;
+            height: 200px;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .status {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .loading { color: #ffc107; }
+        .success { color: #4caf50; }
+        .error { color: #f44336; }
+        .timeout { color: #ff9800; }
+        button {
+            background: #4fc3f7;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #29b6f6;
+        }
+        .log {
+            background: #1a1a1a;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .log-entry {
+            margin: 2px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Image Loading Blocking Test</h1>
+    <p>This test demonstrates how slow/failing image loads can block other images in traditional <code>&lt;img&gt;</code> tags vs our new non-blocking approach.</p>
+    
+    <div>
+        <button onclick="runBlockingTest()">Run Blocking Test (Traditional)</button>
+        <button onclick="runNonBlockingTest()">Run Non-Blocking Test (New Approach)</button>
+        <button onclick="clearTests()">Clear</button>
+    </div>
+    
+    <div class="test-container" id="testContainer"></div>
+    
+    <div class="log" id="log"></div>
+    
+    <script>
+        const log = (msg, type = 'info') => {
+            const logEl = document.getElementById('log');
+            const time = new Date().toLocaleTimeString();
+            const color = type === 'error' ? '#f44336' : type === 'success' ? '#4caf50' : '#999';
+            logEl.innerHTML = `<div class="log-entry" style="color: ${color}">[${time}] ${msg}</div>` + logEl.innerHTML;
+        };
+        
+        const clearTests = () => {
+            document.getElementById('testContainer').innerHTML = '';
+            document.getElementById('log').innerHTML = '';
+        };
+        
+        const runBlockingTest = () => {
+            clearTests();
+            const container = document.getElementById('testContainer');
+            
+            // Test cases
+            const testCases = [
+                { name: 'Fast Image', url: 'https://picsum.photos/400/300?random=1', delay: 0 },
+                { name: 'Slow Image (5s)', url: 'https://httpbin.org/delay/5', delay: 5000 },
+                { name: 'Fast Image 2', url: 'https://picsum.photos/400/300?random=2', delay: 0 },
+                { name: 'Invalid Image', url: 'https://invalid-url-that-does-not-exist.com/image.jpg', delay: 0 },
+                { name: 'Fast Image 3', url: 'https://picsum.photos/400/300?random=3', delay: 0 },
+                { name: 'Timeout Image (10s)', url: 'https://httpbin.org/delay/10', delay: 10000 }
+            ];
+            
+            log('Starting blocking test with traditional <img> tags', 'info');
+            
+            testCases.forEach((test, index) => {
+                const testDiv = document.createElement('div');
+                testDiv.className = 'test-case';
+                testDiv.innerHTML = `
+                    <h3>${test.name}</h3>
+                    <div class="image-container" id="container-blocking-${index}">
+                        <span>Loading...</span>
+                    </div>
+                    <div class="status loading" id="status-blocking-${index}">Loading...</div>
+                `;
+                container.appendChild(testDiv);
+                
+                const startTime = Date.now();
+                const imgContainer = document.getElementById(`container-blocking-${index}`);
+                const statusEl = document.getElementById(`status-blocking-${index}`);
+                
+                // Create traditional img element
+                const img = new Image();
+                
+                img.onload = () => {
+                    const loadTime = Date.now() - startTime;
+                    imgContainer.innerHTML = '';
+                    imgContainer.appendChild(img);
+                    statusEl.className = 'status success';
+                    statusEl.textContent = `Loaded in ${loadTime}ms`;
+                    log(`${test.name}: Loaded in ${loadTime}ms`, 'success');
+                };
+                
+                img.onerror = () => {
+                    const loadTime = Date.now() - startTime;
+                    imgContainer.innerHTML = '<span>❌ Failed</span>';
+                    statusEl.className = 'status error';
+                    statusEl.textContent = `Failed after ${loadTime}ms`;
+                    log(`${test.name}: Failed after ${loadTime}ms`, 'error');
+                };
+                
+                // Start loading
+                img.src = test.url;
+            });
+        };
+        
+        const runNonBlockingTest = () => {
+            clearTests();
+            const container = document.getElementById('testContainer');
+            
+            // Test cases
+            const testCases = [
+                { name: 'Fast Image', url: 'https://picsum.photos/400/300?random=4', delay: 0 },
+                { name: 'Slow Image (5s)', url: 'https://httpbin.org/delay/5', delay: 5000 },
+                { name: 'Fast Image 2', url: 'https://picsum.photos/400/300?random=5', delay: 0 },
+                { name: 'Invalid Image', url: 'https://invalid-url-that-does-not-exist.com/image.jpg', delay: 0 },
+                { name: 'Fast Image 3', url: 'https://picsum.photos/400/300?random=6', delay: 0 },
+                { name: 'Timeout Image (10s)', url: 'https://httpbin.org/delay/10', delay: 10000 }
+            ];
+            
+            log('Starting non-blocking test with timeout approach', 'info');
+            
+            testCases.forEach((test, index) => {
+                const testDiv = document.createElement('div');
+                testDiv.className = 'test-case';
+                testDiv.innerHTML = `
+                    <h3>${test.name}</h3>
+                    <div class="image-container" id="container-nonblocking-${index}">
+                        <span>⏳ Loading...</span>
+                    </div>
+                    <div class="status loading" id="status-nonblocking-${index}">Loading...</div>
+                `;
+                container.appendChild(testDiv);
+                
+                loadImageWithTimeout(test.url, 3000, index, test.name);
+            });
+        };
+        
+        const loadImageWithTimeout = (url, timeout, index, name) => {
+            const startTime = Date.now();
+            const imgContainer = document.getElementById(`container-nonblocking-${index}`);
+            const statusEl = document.getElementById(`status-nonblocking-${index}`);
+            
+            let timeoutId;
+            let completed = false;
+            
+            // Create new image element
+            const img = new Image();
+            
+            // Set up timeout
+            timeoutId = setTimeout(() => {
+                if (!completed) {
+                    completed = true;
+                    img.src = ''; // Cancel loading
+                    const loadTime = Date.now() - startTime;
+                    imgContainer.innerHTML = '<span>⏱️ Timeout</span>';
+                    statusEl.className = 'status timeout';
+                    statusEl.textContent = `Timeout after ${timeout}ms`;
+                    log(`${name}: Timeout after ${timeout}ms`, 'error');
+                }
+            }, timeout);
+            
+            img.onload = () => {
+                if (!completed) {
+                    completed = true;
+                    clearTimeout(timeoutId);
+                    const loadTime = Date.now() - startTime;
+                    imgContainer.innerHTML = '';
+                    imgContainer.appendChild(img);
+                    statusEl.className = 'status success';
+                    statusEl.textContent = `Loaded in ${loadTime}ms`;
+                    log(`${name}: Loaded in ${loadTime}ms`, 'success');
+                }
+            };
+            
+            img.onerror = () => {
+                if (!completed) {
+                    completed = true;
+                    clearTimeout(timeoutId);
+                    const loadTime = Date.now() - startTime;
+                    imgContainer.innerHTML = '<span>❌ Failed</span>';
+                    statusEl.className = 'status error';
+                    statusEl.textContent = `Failed after ${loadTime}ms`;
+                    log(`${name}: Failed after ${loadTime}ms`, 'error');
+                }
+            };
+            
+            // Start loading
+            img.src = url;
+        };
+    </script>
+</body>
+</html>

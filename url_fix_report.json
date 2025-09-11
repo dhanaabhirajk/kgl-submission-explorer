@@ -1,0 +1,675 @@
+{
+  "analysisDate": "2025-09-11T06:35:10.885Z",
+  "totalUrls": 811,
+  "totalFixes": 95,
+  "fixesByType": {
+    "double_slash_after_domain": 95
+  },
+  "fixes": [
+    {
+      "index": 0,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/level-up-interactive-avatar-generation-and-dynamic",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/level-up-interactive-avatar-generation-and-dynamic",
+      "issueType": "double_slash_after_domain",
+      "title": "Banana Level Up"
+    },
+    {
+      "index": 1,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/memory-restorer-bring-your-old-photos-back-to-life",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/memory-restorer-bring-your-old-photos-back-to-life",
+      "issueType": "double_slash_after_domain",
+      "title": "Memory Restorer, Bring Your Old Photos Back to Life"
+    },
+    {
+      "index": 2,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/ai-story-arc-generator",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/ai-story-arc-generator",
+      "issueType": "double_slash_after_domain",
+      "title": "AI Story Arc Generator"
+    },
+    {
+      "index": 3,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/level-up-interactive-avatar-generation-and-dynamic",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/level-up-interactive-avatar-generation-and-dynamic",
+      "issueType": "double_slash_after_domain",
+      "title": "Banana Level Up"
+    },
+    {
+      "index": 4,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/lookagain-fun-a-community-spot-the-difference-puzz",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/lookagain-fun-a-community-spot-the-difference-puzz",
+      "issueType": "double_slash_after_domain",
+      "title": "LookAgain.fun - a community spot the difference puzzle AI game"
+    },
+    {
+      "index": 5,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/vibemooding-vibe-code-your-home-decor",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/vibemooding-vibe-code-your-home-decor",
+      "issueType": "double_slash_after_domain",
+      "title": "VibeMooding - Vibe Code your home decor"
+    },
+    {
+      "index": 6,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/synesthesia-canvas",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/synesthesia-canvas",
+      "issueType": "double_slash_after_domain",
+      "title": "Synesthesia Canvas"
+    },
+    {
+      "index": 7,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/emoji-profile-maker-kaggle-nano-banana-hackathon",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/emoji-profile-maker-kaggle-nano-banana-hackathon",
+      "issueType": "double_slash_after_domain",
+      "title": "🎭 Emoji Profile Maker | Kaggle Nano Banana Hackathon"
+    },
+    {
+      "index": 8,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/photopro",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/photopro",
+      "issueType": "double_slash_after_domain",
+      "title": "PhotoPro: AI Photo Editor That Makes Your Selfies Less Tragic"
+    },
+    {
+      "index": 9,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/image-duel-spot-the-difference",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/image-duel-spot-the-difference",
+      "issueType": "double_slash_after_domain",
+      "title": "Image Duel: Spot the Difference 🎯"
+    },
+    {
+      "index": 10,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/banana-split-stories",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/banana-split-stories",
+      "issueType": "double_slash_after_domain",
+      "title": "Banana Split Stories"
+    },
+    {
+      "index": 11,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/htt",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/htt",
+      "issueType": "double_slash_after_domain",
+      "title": "Bree: Your AI Stylist with a Virtual Closet"
+    },
+    {
+      "index": 12,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/civic-futures-democratizing-urban-planning-with-na",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/civic-futures-democratizing-urban-planning-with-na",
+      "issueType": "double_slash_after_domain",
+      "title": "Civic Futures: Democratizing Urban Planning with Nano Banana"
+    },
+    {
+      "index": 13,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/remix-but-unboring",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/remix-but-unboring",
+      "issueType": "double_slash_after_domain",
+      "title": "Remix, but unboring"
+    },
+    {
+      "index": 14,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/brandgen-your-ai-powered-brand-kit-creator",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/brandgen-your-ai-powered-brand-kit-creator",
+      "issueType": "double_slash_after_domain",
+      "title": "BrandGen: Your AI-Powered Brand Kit Creator"
+    },
+    {
+      "index": 15,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/magical-architecture-visualizer",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/magical-architecture-visualizer",
+      "issueType": "double_slash_after_domain",
+      "title": "Architecture Visualizer"
+    },
+    {
+      "index": 16,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/tsuzuku-mirai",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/tsuzuku-mirai",
+      "issueType": "double_slash_after_domain",
+      "title": "Tsuzuku Mirai"
+    },
+    {
+      "index": 17,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/vizfit-visualize-before-you-buy-fashion-or-home",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/vizfit-visualize-before-you-buy-fashion-or-home",
+      "issueType": "double_slash_after_domain",
+      "title": "VizFit - Visualize before you buy fashion or home!"
+    },
+    {
+      "index": 18,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/fitcheck-an-in-browser-virtual-try-on-experience-p",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/fitcheck-an-in-browser-virtual-try-on-experience-p",
+      "issueType": "double_slash_after_domain",
+      "title": "FitCheck - an in-browser virtual try-on experience powered by NanoBanana"
+    },
+    {
+      "index": 19,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/dinobaby-ai",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/dinobaby-ai",
+      "issueType": "double_slash_after_domain",
+      "title": "DinoBaby AI"
+    },
+    {
+      "index": 20,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/nano-banana-hackathon-story-to-image-generator-wit",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/nano-banana-hackathon-story-to-image-generator-wit",
+      "issueType": "double_slash_after_domain",
+      "title": "Nano Banana Hackathon – Story-to-Image Generator with Gemini AI"
+    },
+    {
+      "index": 21,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/ideal-smile-designer",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/ideal-smile-designer",
+      "issueType": "double_slash_after_domain",
+      "title": "Ideal Smile Designer"
+    },
+    {
+      "index": 22,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/diykea-diy-steps-for-anything-ikea-style",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/diykea-diy-steps-for-anything-ikea-style",
+      "issueType": "double_slash_after_domain",
+      "title": "DIYkea - DIY steps for anything, IKEA style!"
+    },
+    {
+      "index": 23,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/traumstorys-your-childs-bedtime-story-that-changes",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/traumstorys-your-childs-bedtime-story-that-changes",
+      "issueType": "double_slash_after_domain",
+      "title": "TraumStorys: Your Child's Bedtime Story That Changes With Your Choices"
+    },
+    {
+      "index": 24,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/visual-artificer-ai-powered-image-re-imagination",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/visual-artificer-ai-powered-image-re-imagination",
+      "issueType": "double_slash_after_domain",
+      "title": "Visual Artificer: AI-Powered Image Re-imagination"
+    },
+    {
+      "index": 25,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/vizassist-making-visual-data-inclusive",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/vizassist-making-visual-data-inclusive",
+      "issueType": "double_slash_after_domain",
+      "title": "Vizzy: Making Visual Data Inclusive"
+    },
+    {
+      "index": 26,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/bananafit-ai-powered-virtual-try-on-in-seconds",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/bananafit-ai-powered-virtual-try-on-in-seconds",
+      "issueType": "double_slash_after_domain",
+      "title": "BananaFit: AI-powered virtual try-on in seconds"
+    },
+    {
+      "index": 27,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/medivision",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/medivision",
+      "issueType": "double_slash_after_domain",
+      "title": "MediVision"
+    },
+    {
+      "index": 28,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/ai-fantasy-map-generator",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/ai-fantasy-map-generator",
+      "issueType": "double_slash_after_domain",
+      "title": "AI Fantasy Map Generator"
+    },
+    {
+      "index": 29,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/echo-reach",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/echo-reach",
+      "issueType": "double_slash_after_domain",
+      "title": "Echo reach"
+    },
+    {
+      "index": 30,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/ecommerce-product-visualizer",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/ecommerce-product-visualizer",
+      "issueType": "double_slash_after_domain",
+      "title": "Ecommerce Product Visualizer"
+    },
+    {
+      "index": 31,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/ai-powered-learning-material-generator",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/ai-powered-learning-material-generator",
+      "issueType": "double_slash_after_domain",
+      "title": "AI-Powered Learning Material Generator"
+    },
+    {
+      "index": 32,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/nano-banana-try-on",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/nano-banana-try-on",
+      "issueType": "double_slash_after_domain",
+      "title": "Nano banana try on"
+    },
+    {
+      "index": 33,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/tryon-studio",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/tryon-studio",
+      "issueType": "double_slash_after_domain",
+      "title": "Try On Studio"
+    },
+    {
+      "index": 34,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/silent-comic-strip-generator",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/silent-comic-strip-generator",
+      "issueType": "double_slash_after_domain",
+      "title": "Silent Comic Strip Generator"
+    },
+    {
+      "index": 35,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/StyleChef",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/StyleChef",
+      "issueType": "double_slash_after_domain",
+      "title": "StyleChef 📸 🧑🏽‍🍳"
+    },
+    {
+      "index": 36,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/mockup-monkey",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/mockup-monkey",
+      "issueType": "double_slash_after_domain",
+      "title": "Mockup Monkey"
+    },
+    {
+      "index": 37,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/stickit-creator",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/stickit-creator",
+      "issueType": "double_slash_after_domain",
+      "title": "Stickit Creator"
+    },
+    {
+      "index": 38,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/BeyondReality",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/BeyondReality",
+      "issueType": "double_slash_after_domain",
+      "title": "Beyond Reality: see what you think and dream of"
+    },
+    {
+      "index": 39,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/dreamroomer-ai-powered-kids-room-styler",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/dreamroomer-ai-powered-kids-room-styler",
+      "issueType": "double_slash_after_domain",
+      "title": "DreamRoomer : AI-Powered Kids’ Room Styler"
+    },
+    {
+      "index": 40,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/floor-plan-ai-visualization-editor",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/floor-plan-ai-visualization-editor",
+      "issueType": "double_slash_after_domain",
+      "title": "Floor Plan AI Visualization Editor"
+    },
+    {
+      "index": 41,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/cross-eyed-sterogram",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/cross-eyed-sterogram",
+      "issueType": "double_slash_after_domain",
+      "title": "3D Effects with Cross Eye Sterogram"
+    },
+    {
+      "index": 42,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/mulmocast-kpop-demon-hunters-netflixs-unexpected-g",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/mulmocast-kpop-demon-hunters-netflixs-unexpected-g",
+      "issueType": "double_slash_after_domain",
+      "title": "MulmoCast: KPop Demon Hunters: Netflix's Unexpected Global Phenomenon"
+    },
+    {
+      "index": 43,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/banana-drawing",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/banana-drawing",
+      "issueType": "double_slash_after_domain",
+      "title": "Banana Drawing"
+    },
+    {
+      "index": 44,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/tryonai",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/tryonai",
+      "issueType": "double_slash_after_domain",
+      "title": "Virtual Try-On App for Online & Offline Shopping"
+    },
+    {
+      "index": 45,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/transform-photos-into-fun-stickers",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/transform-photos-into-fun-stickers",
+      "issueType": "double_slash_after_domain",
+      "title": "Transform Photos into Fun Stickers"
+    },
+    {
+      "index": 46,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/sayless",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/sayless",
+      "issueType": "double_slash_after_domain",
+      "title": "Sayless: Easy Image Compositing"
+    },
+    {
+      "index": 47,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/dream-journey",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/dream-journey",
+      "issueType": "double_slash_after_domain",
+      "title": "Dream Journey"
+    },
+    {
+      "index": 48,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/newsence-re-imagine-news-for-you",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/newsence-re-imagine-news-for-you",
+      "issueType": "double_slash_after_domain",
+      "title": "newsence: re-imagine news for you"
+    },
+    {
+      "index": 49,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/cread-art-gen",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/cread-art-gen",
+      "issueType": "double_slash_after_domain",
+      "title": "CreAD Art Gen"
+    },
+    {
+      "index": 50,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/catch-the-trend-ai",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/catch-the-trend-ai",
+      "issueType": "double_slash_after_domain",
+      "title": "Catch The Trend AI: You, In Any Trend"
+    },
+    {
+      "index": 51,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/roblox-kitsch-goods",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/roblox-kitsch-goods",
+      "issueType": "double_slash_after_domain",
+      "title": "Roblox Kitsch Goods"
+    },
+    {
+      "index": 52,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/easy-nano-banana-an-ai-creative-partner-that-engin",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/easy-nano-banana-an-ai-creative-partner-that-engin",
+      "issueType": "double_slash_after_domain",
+      "title": "Easy Nano Banana: An AI Creative Partner that Engineers Prompts For You"
+    },
+    {
+      "index": 53,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/sombras-del-pacifico",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/sombras-del-pacifico",
+      "issueType": "double_slash_after_domain",
+      "title": "Sombras del Pacífico"
+    },
+    {
+      "index": 54,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/ai-hairstylist",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/ai-hairstylist",
+      "issueType": "double_slash_after_domain",
+      "title": "AI Hairstylist"
+    },
+    {
+      "index": 55,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/nano-banana-image-gen-demo",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/nano-banana-image-gen-demo",
+      "issueType": "double_slash_after_domain",
+      "title": "Nano Banana Image Gen Demo"
+    },
+    {
+      "index": 56,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/admagic-instant-ad-campaigns-from-one-product-phot",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/admagic-instant-ad-campaigns-from-one-product-phot",
+      "issueType": "double_slash_after_domain",
+      "title": "AdMagic – Instant Ad Campaigns from One Product Photo"
+    },
+    {
+      "index": 57,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/mini-webseries-creator",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/mini-webseries-creator",
+      "issueType": "double_slash_after_domain",
+      "title": "MiniStory -AI director"
+    },
+    {
+      "index": 58,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/ai-image-dataset-generator",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/ai-image-dataset-generator",
+      "issueType": "double_slash_after_domain",
+      "title": "AI Image Dataset Generator"
+    },
+    {
+      "index": 59,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/smile-design-studio-ai-powered-visuals-for-dental",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/smile-design-studio-ai-powered-visuals-for-dental",
+      "issueType": "double_slash_after_domain",
+      "title": "Smile Design Studio: AI-Powered Visuals for Dental Patient Consultation"
+    },
+    {
+      "index": 60,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/gamify-my-photo",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/gamify-my-photo",
+      "issueType": "double_slash_after_domain",
+      "title": "Gamify My Photo"
+    },
+    {
+      "index": 61,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/virtual-room-enhancer-using-gemini",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/virtual-room-enhancer-using-gemini",
+      "issueType": "double_slash_after_domain",
+      "title": "Virtual Room Enhancer Using Gemini"
+    },
+    {
+      "index": 62,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/adap-ai-preview",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/adap-ai-preview",
+      "issueType": "double_slash_after_domain",
+      "title": "BananaFits - Drip Without the Trip - Try Anything & Everything Anywhere"
+    },
+    {
+      "index": 63,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/test-to-impress",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/test-to-impress",
+      "issueType": "double_slash_after_domain",
+      "title": "Test to Impress"
+    },
+    {
+      "index": 64,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/nano-bananary",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/nano-bananary",
+      "issueType": "double_slash_after_domain",
+      "title": "Nano Bananary"
+    },
+    {
+      "index": 65,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/artisans-eye-ai-artwork-restoration",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/artisans-eye-ai-artwork-restoration",
+      "issueType": "double_slash_after_domain",
+      "title": "Artisan's Eye: AI Artwork Restoration"
+    },
+    {
+      "index": 66,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/virtual-stager-ai",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/virtual-stager-ai",
+      "issueType": "double_slash_after_domain",
+      "title": "Virtual Stager AI"
+    },
+    {
+      "index": 67,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/worldforge-ai-powered-isometric-world-generator",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/worldforge-ai-powered-isometric-world-generator",
+      "issueType": "double_slash_after_domain",
+      "title": "WorldForge: AI-Powered Isometric World Generator"
+    },
+    {
+      "index": 68,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/museum-of-forgotten-selfies",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/museum-of-forgotten-selfies",
+      "issueType": "double_slash_after_domain",
+      "title": "📸 Museum of Forgotten Selfies"
+    },
+    {
+      "index": 69,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/virtual-hairstyler",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/virtual-hairstyler",
+      "issueType": "double_slash_after_domain",
+      "title": "Virtual Hairstyler"
+    },
+    {
+      "index": 70,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/virtual-try-on-ai",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/virtual-try-on-ai",
+      "issueType": "double_slash_after_domain",
+      "title": "Virtual Try-On AI"
+    },
+    {
+      "index": 71,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/ai-commercial-video-creator",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/ai-commercial-video-creator",
+      "issueType": "double_slash_after_domain",
+      "title": "AI Commercial Video Creator"
+    },
+    {
+      "index": 72,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/seasonal-profile-picture-studio",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/seasonal-profile-picture-studio",
+      "issueType": "double_slash_after_domain",
+      "title": "Seasonal Profile Picture Studio"
+    },
+    {
+      "index": 73,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/trac-quoc-ai-tools-multi-purpose-image-editing-sui",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/trac-quoc-ai-tools-multi-purpose-image-editing-sui",
+      "issueType": "double_slash_after_domain",
+      "title": "Trac Quoc AI Tools – Multi-Purpose Image Editing Suite"
+    },
+    {
+      "index": 74,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/visualink-instant-marketing-posters-with-gemini",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/visualink-instant-marketing-posters-with-gemini",
+      "issueType": "double_slash_after_domain",
+      "title": "VisuaLink- Instant Marketing Posters with Gemini"
+    },
+    {
+      "index": 75,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/ai-covert-art-for-mtm-app",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/ai-covert-art-for-mtm-app",
+      "issueType": "double_slash_after_domain",
+      "title": "AI Covert Art for MTM App"
+    },
+    {
+      "index": 76,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/ai-ad-creator",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/ai-ad-creator",
+      "issueType": "double_slash_after_domain",
+      "title": "Revolutionizing Ad Design with AI: Introducing AI-Ad-Creator"
+    },
+    {
+      "index": 77,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/ai-creative-dice",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/ai-creative-dice",
+      "issueType": "double_slash_after_domain",
+      "title": "AI Creative Dice – Structured Randomness for Creative Innovation"
+    },
+    {
+      "index": 78,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/expression-deck",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/expression-deck",
+      "issueType": "double_slash_after_domain",
+      "title": "Expression Deck"
+    },
+    {
+      "index": 79,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/who-were-you-in-ancient-times",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/who-were-you-in-ancient-times",
+      "issueType": "double_slash_after_domain",
+      "title": "Who Were You in Ancient Times?"
+    },
+    {
+      "index": 80,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/ai-comic-factory",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/ai-comic-factory",
+      "issueType": "double_slash_after_domain",
+      "title": "AI Comic Factory"
+    },
+    {
+      "index": 81,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/celebrity-selfie-generator",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/celebrity-selfie-generator",
+      "issueType": "double_slash_after_domain",
+      "title": "Celebrity Selfie Generator"
+    },
+    {
+      "index": 82,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/poseup-ai-perfect-your-pose-in-any-photo-with-ai",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/poseup-ai-perfect-your-pose-in-any-photo-with-ai",
+      "issueType": "double_slash_after_domain",
+      "title": "PoseUp.ai: Instantly Change Your Pose with Natural Language & AI"
+    },
+    {
+      "index": 83,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/processviz-ai-multi-style-industrial-process-diagr",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/processviz-ai-multi-style-industrial-process-diagr",
+      "issueType": "double_slash_after_domain",
+      "title": "ProcessViz AI: Multi-Style Industrial Process Diagram Generator"
+    },
+    {
+      "index": 84,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/ai-recipe-generator",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/ai-recipe-generator",
+      "issueType": "double_slash_after_domain",
+      "title": "AI Recipe Generator"
+    },
+    {
+      "index": 85,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/atelierone-ai-renaissance-portrait-generator",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/atelierone-ai-renaissance-portrait-generator",
+      "issueType": "double_slash_after_domain",
+      "title": "AtelierOne: AI Renaissance Portrait Generator"
+    },
+    {
+      "index": 86,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/ai-mockup-pro-r-i-p-figma",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/ai-mockup-pro-r-i-p-figma",
+      "issueType": "double_slash_after_domain",
+      "title": "AI Mockup Pro - R.I.P Figma"
+    },
+    {
+      "index": 87,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/from-awkward-poses-to-instagram-worthy-building-my",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/from-awkward-poses-to-instagram-worthy-building-my",
+      "issueType": "double_slash_after_domain",
+      "title": "From Awkward Poses to Instagram Worthy – Building My Own AI Photo App"
+    },
+    {
+      "index": 88,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/worlddress-ai",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/worlddress-ai",
+      "issueType": "double_slash_after_domain",
+      "title": "WorldDress AI – Instantly experience traditional costumes worldwide"
+    },
+    {
+      "index": 89,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/style-forge",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/style-forge",
+      "issueType": "double_slash_after_domain",
+      "title": "Style Forge"
+    },
+    {
+      "index": 90,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/ai-immersive-chatbot-ai-friends",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/ai-immersive-chatbot-ai-friends",
+      "issueType": "double_slash_after_domain",
+      "title": "AI Immersive Chatbot (AI Friends)"
+    },
+    {
+      "index": 91,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/improved-video-editing-elements-using-nano-banana",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/improved-video-editing-elements-using-nano-banana",
+      "issueType": "double_slash_after_domain",
+      "title": "Improved Video Editing Elements Using Nano Banana"
+    },
+    {
+      "index": 92,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/red-star-realism",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/red-star-realism",
+      "issueType": "double_slash_after_domain",
+      "title": "Red Star Realism"
+    },
+    {
+      "index": 93,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/batchify-an-ai-product-shot-generator",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/batchify-an-ai-product-shot-generator",
+      "issueType": "double_slash_after_domain",
+      "title": "Batchify - An AI Product Shot Generator"
+    },
+    {
+      "index": 94,
+      "originalUrl": "https://www.kaggle.com//competitions/banana/writeups/ai-comic-creator",
+      "fixedUrl": "https://www.kaggle.com/competitions/banana/writeups/ai-comic-creator",
+      "issueType": "double_slash_after_domain",
+      "title": "AI Comic Creator"
+    }
+  ]
+}

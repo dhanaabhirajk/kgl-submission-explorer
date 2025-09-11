@@ -26,7 +26,7 @@ function App() {
   const [isMobile, setIsMobile] = useState(false);
   const [viewMode, setViewMode] = useState<'scatter' | 'terrain'>('terrain');
   const [showBackgroundImage, setShowBackgroundImage] = useState(true);  // Default to true for terrain
-  const [backgroundImageUrl, setBackgroundImageUrl] = useState<string>('/data/banana_background.jpeg');
+  const [backgroundImageUrl, setBackgroundImageUrl] = useState<string>(`${import.meta.env.BASE_URL}data/banana_background.jpeg`);
   const [backgroundOpacity, setBackgroundOpacity] = useState(0.45);  // Higher default opacity
   const [isClusterLegendCollapsed, setIsClusterLegendCollapsed] = useState(false);
   const [showTerrainHint, setShowTerrainHint] = useState(true);
