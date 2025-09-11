@@ -10,6 +10,7 @@ import { SimilarityPanel } from './components/Sidebar/SimilarityPanel';
 import { SearchBar } from './components/Sidebar/SearchBar';
 import { FilterPanel } from './components/Sidebar/FilterPanel';
 import { StatsPanel } from './components/Sidebar/StatsPanel';
+import { SummaryPanel } from './components/Sidebar/SummaryPanel';
 import { SidebarTabs } from './components/Sidebar/SidebarTabs';
 import { ClusterLegend } from './components/Legend/ClusterLegend';
 import { SelectionIndicator } from './components/SelectionIndicator/SelectionIndicator';
@@ -21,7 +22,7 @@ function App() {
   const { loadData, isLoading, error, hoveredProjectId, selectedProjectId, setSelectedProjectId, getProjectById, uniqueProjectIds } = useDataStore();
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [isDetailOpen, setIsDetailOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<'explore' | 'statistics'>('explore');
+  const [activeTab, setActiveTab] = useState<'summary' | 'explore' | 'statistics'>('summary');
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [viewMode, setViewMode] = useState<'scatter' | 'terrain'>('terrain');
@@ -176,7 +177,7 @@ function App() {
         className={`${isMobile ? 'fixed inset-y-0 left-0 z-40' : ''} bg-sidebar-bg border-r border-gray-800 flex flex-col`}
         initial={false}
         animate={{ 
-          width: isMobile ? (isMobileSidebarOpen ? '85%' : 0) : (activeTab === 'statistics' ? 450 : 300),
+          width: isMobile ? (isMobileSidebarOpen ? '85%' : 0) : (activeTab === 'statistics' ? 450 : 360),
           opacity: isMobile ? (isMobileSidebarOpen ? 1 : 0) : 1
         }}
         transition={{ type: 'spring', damping: 25, stiffness: 300 }}
@@ -195,13 +196,17 @@ function App() {
         <SidebarTabs activeTab={activeTab} onTabChange={setActiveTab} />
 
         {/* Sidebar Content */}
-        {activeTab === 'explore' ? (
+        {activeTab === 'summary' && (
+          <SummaryPanel />
+        )}
+        {activeTab === 'explore' && (
           <div className="flex-1 overflow-y-auto">
             <SearchBar />
             <FilterPanel />
             <SimilarityPanel />
           </div>
-        ) : (
+        )}
+        {activeTab === 'statistics' && (
           <StatsPanel />
         )}
       </motion.div>
