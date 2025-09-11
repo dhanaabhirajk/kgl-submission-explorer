@@ -3,6 +3,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { X, ExternalLink, Sparkles } from 'lucide-react';
 import type { Submission } from '../../types';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ImageWithTimeout } from '../ImageWithTimeout';
 
 interface ProjectDetailProps {
   project: Submission | null;
@@ -45,14 +46,16 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({
                   {/* Hero Image */}
                   <div className="relative w-full h-64 bg-gradient-to-br from-purple-600/20 to-blue-600/20 overflow-hidden">
                     {project.hero_image_url ? (
-                      <img
+                      <ImageWithTimeout
                         src={project.hero_image_url}
                         alt={project.title}
                         className="w-full h-full object-cover"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = 'none';
-                        }}
+                        timeout={3000}
+                        fallback={
+                          <div className="flex items-center justify-center h-full">
+                            <div className="text-gray-600 text-6xl">🎨</div>
+                          </div>
+                        }
                       />
                     ) : (
                       <div className="flex items-center justify-center h-full">

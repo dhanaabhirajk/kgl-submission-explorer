@@ -13,6 +13,7 @@ import { StatsPanel } from './components/Sidebar/StatsPanel';
 import { SidebarTabs } from './components/Sidebar/SidebarTabs';
 import { ClusterLegend } from './components/Legend/ClusterLegend';
 import { SelectionIndicator } from './components/SelectionIndicator/SelectionIndicator';
+import { ImageWithTimeout } from './components/ImageWithTimeout';
 import { motion } from 'framer-motion';
 import { Layers, Mountain, Building } from 'lucide-react';
 
@@ -400,14 +401,17 @@ function App() {
             }}>
             {hoveredProject.hero_image_url && (
               <div className="w-full h-48 bg-gray-800">
-                <img 
-                  src={hoveredProject.hero_image_url} 
+                <ImageWithTimeout
+                  src={hoveredProject.hero_image_url}
                   alt={hoveredProject.title}
                   className="w-full h-full object-cover"
                   style={{ maxWidth: '400px' }}
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                  }}
+                  timeout={2000}
+                  fallback={
+                    <div className="w-full h-full bg-gray-800 flex items-center justify-center">
+                      <div className="text-gray-600 text-3xl">🖼️</div>
+                    </div>
+                  }
                 />
               </div>
             )}

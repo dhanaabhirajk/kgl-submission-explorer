@@ -3,6 +3,7 @@ import { useDataStore } from '../../store/useDataStore';
 import type { Submission, SimilarProject } from '../../types';
 import { Sparkles, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ImageWithTimeout } from '../ImageWithTimeout';
 
 export const SimilarityPanel: React.FC = () => {
   const { 
@@ -87,14 +88,16 @@ export const SimilarityPanel: React.FC = () => {
                   {/* Thumbnail */}
                   <div className="w-16 h-16 bg-gray-700 rounded-md overflow-hidden flex-shrink-0">
                     {project.hero_image_url ? (
-                      <img
+                      <ImageWithTimeout
                         src={project.hero_image_url}
                         alt={project.title}
                         className="w-full h-full object-cover"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = 'none';
-                        }}
+                        timeout={2000}
+                        fallback={
+                          <div className="w-full h-full flex items-center justify-center text-gray-600">
+                            🎨
+                          </div>
+                        }
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-gray-600">

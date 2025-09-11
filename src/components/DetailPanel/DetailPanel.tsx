@@ -1,6 +1,7 @@
 import React from 'react';
 import { X, ExternalLink, Sparkles, Tag, Calendar, Hash } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ImageWithTimeout } from '../ImageWithTimeout';
 import type { Submission } from '../../types';
 
 interface DetailPanelProps {
@@ -29,14 +30,16 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
           {/* Header with image */}
           <div className="relative h-48 bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex-shrink-0">
             {project.hero_image_url ? (
-              <img
+              <ImageWithTimeout
                 src={project.hero_image_url}
                 alt={project.title}
                 className="w-full h-full object-cover"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                }}
+                timeout={3000}
+                fallback={
+                  <div className="flex items-center justify-center h-full">
+                    <div className="text-gray-600 text-5xl">🎨</div>
+                  </div>
+                }
               />
             ) : (
               <div className="flex items-center justify-center h-full">
