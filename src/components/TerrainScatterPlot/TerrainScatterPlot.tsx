@@ -624,8 +624,8 @@ export const TerrainScatterPlot: React.FC<TerrainScatterPlotProps> = ({
         let detailedOpacity = 0;
         
         if (zoomLevel < 1.5) {
-          // Show only high-level clusters
-          highLevelOpacity = zoomLevel > 0.8 ? Math.min((zoomLevel - 0.8) * 1.43 * labelOpacity, labelOpacity) : 0;
+          // Show high-level clusters from the beginning, fully visible at low zoom
+          highLevelOpacity = Math.min(zoomLevel * 1.2 * labelOpacity, labelOpacity);
           detailedOpacity = 0;
         } else if (zoomLevel < 2.5) {
           // Transition from high-level to detailed
@@ -963,7 +963,7 @@ export const TerrainScatterPlot: React.FC<TerrainScatterPlotProps> = ({
         .attr('fill', '#ffffff')  // White text for better contrast
         .attr('font-size', '16px')
         .attr('font-weight', 'bold')
-        .attr('opacity', 0) // Start hidden, will be shown based on zoom
+        .attr('opacity', 0.8) // Start visible to engage users immediately
         .attr('pointer-events', 'none')
         .style('text-shadow', `0 0 12px ${cluster.color}, 0 0 6px rgba(0,0,0,0.9), 0 0 3px rgba(0,0,0,0.95)`)
         .style('paint-order', 'stroke fill')

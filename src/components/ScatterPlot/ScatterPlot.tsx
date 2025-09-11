@@ -111,8 +111,8 @@ export const ScatterPlot: React.FC<ScatterPlotProps> = ({ width, height }) => {
         let detailedOpacity = 0;
         
         if (zoomLevel < 1.5) {
-          // Show only high-level clusters (earlier than before)
-          highLevelOpacity = zoomLevel > 0.8 ? Math.min((zoomLevel - 0.8) * 1.43, 1) : 0;
+          // Show high-level clusters from the beginning, fully visible at low zoom
+          highLevelOpacity = Math.min(zoomLevel * 1.2, 1);
           detailedOpacity = 0;
         } else if (zoomLevel < 2.5) {
           // Transition from high-level to detailed
@@ -318,7 +318,7 @@ export const ScatterPlot: React.FC<ScatterPlotProps> = ({ width, height }) => {
       .attr('fill', d => d.color)
       .attr('font-size', '14px')
       .attr('font-weight', 'bold')
-      .attr('opacity', 0)
+      .attr('opacity', 0.8)
       .attr('pointer-events', 'none')
       .style('text-shadow', '0 0 10px rgba(0,0,0,0.95), 0 0 20px rgba(0,0,0,0.8)')
       .text(d => d.name);
