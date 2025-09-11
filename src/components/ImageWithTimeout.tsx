@@ -26,7 +26,7 @@ export const ImageWithTimeout: React.FC<ImageWithTimeoutProps> = ({
   const [imageState, setImageState] = useState<'loading' | 'loaded' | 'error' | 'timeout'>('loading');
   const [currentSrc, setCurrentSrc] = useState<string>('');
   const imgRef = useRef<HTMLImageElement | null>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const loadingRef = useRef<boolean>(false);
 
   useEffect(() => {

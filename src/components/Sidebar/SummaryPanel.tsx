@@ -208,7 +208,7 @@ export const SummaryPanel: React.FC = () => {
           <div className="space-y-6">
             {group.items.map((s, si) => (
               <div key={si} className="bg-gray-800/30 rounded-lg border border-gray-800 overflow-hidden">
-                <div className="w-full h-36 md:h-40 bg-gray-900">
+                <div className="w-full h-40 md:h-48 bg-gray-900">
                   <img
                     src={`${base}${s.image}`}
                     alt={s.title}
