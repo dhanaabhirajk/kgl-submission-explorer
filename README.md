@@ -59,7 +59,7 @@ Multiple background styles make the "project landscape" easier to read depending
 
 ## Topic overview
 
-<p>This section provides a quick, visual overview of opportunity areas observed in the dataset. Each row shows a concise description on the left and a representative image on the right. Tables are intentionally simple for reliable rendering on GitHub.</p>
+<p>This section provides a quick, visual overview of opportunity areas observed in the dataset.</p>
 
 <h3>Media &amp; Entertainment</h3>
 

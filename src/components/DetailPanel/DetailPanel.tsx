@@ -2,6 +2,7 @@ import React from 'react';
 import { X, ExternalLink, Sparkles, Tag, Calendar, Hash } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ImageWithTimeout } from '../ImageWithTimeout';
+import { sanitizeKaggleUrl } from '../../utils/url';
 import type { Submission } from '../../types';
 
 interface DetailPanelProps {
@@ -164,7 +165,7 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
           <div className="border-t border-gray-800 p-4 flex gap-3 bg-gray-900/50 backdrop-blur-sm">
             {project.writeup_url && (
               <a
-                href={project.writeup_url}
+                href={sanitizeKaggleUrl(project.writeup_url)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm font-medium"

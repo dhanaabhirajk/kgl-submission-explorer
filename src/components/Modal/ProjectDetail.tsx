@@ -4,6 +4,7 @@ import { X, ExternalLink, Sparkles } from 'lucide-react';
 import type { Submission } from '../../types';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ImageWithTimeout } from '../ImageWithTimeout';
+import { sanitizeKaggleUrl } from '../../utils/url';
 
 interface ProjectDetailProps {
   project: Submission | null;
@@ -156,7 +157,7 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({
                     <div className="flex gap-4">
                       {project.writeup_url && (
                         <a
-                          href={project.writeup_url}
+                          href={sanitizeKaggleUrl(project.writeup_url)}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
