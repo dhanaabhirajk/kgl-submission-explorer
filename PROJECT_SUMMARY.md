@@ -307,4 +307,4 @@ When complete, the app should:
 
 ## 🔗 Live Demo
 
-Explore the deployed app here: [serjoschduering.github.io/kgl-submission-explorer](https://serjoschduering.github.io/kgl-submission-explorer/)
+Explore the deployed app here: [dhanaabhirajk.github.io/kgl-submission-explorer](https://dhanaabhirajk.github.io/kgl-submission-explorer/)
