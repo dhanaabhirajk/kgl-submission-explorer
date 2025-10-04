@@ -4,6 +4,7 @@ A GenAI-powered governance intelligence system that transforms citizen grievance
 
 **Use Case:** SN2 — Governance Data Mining for Citizen Grievance Analysis
 
+
 This explorer helps government officers:
 - Identify recurring grievance patterns by geography and time
 - Detect hotspots requiring immediate attention
