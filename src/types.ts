@@ -1,20 +1,29 @@
-// Data types matching our actual JSON structure
+// Data types for Governance Data Mining System (SN2)
 
 export interface Submission {
   // Identifiers
   data_point_id: number;
   
-  // Content
+  // Content - Grievance Details
   title: string;
   subtitle: string;
   description: string;
   hero_image_url: string;
   writeup_url: string;
   
-  // Metadata
+  // Governance Metadata
   date: string;
   tags: string[];
   category_tags: string[];
+  
+  // Governance-specific fields
+  district?: string;
+  department?: string;
+  severity?: 'Low' | 'Medium' | 'High' | 'Critical';
+  status?: 'Open' | 'In Progress' | 'Resolved' | 'Closed';
+  sla_days?: number;
+  citizen_id?: string;
+  resolution_summary?: string;
   
   // Clustering & Positioning
   umap_dim_1: number;

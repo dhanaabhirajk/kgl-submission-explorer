@@ -15,6 +15,7 @@ import { SidebarTabs } from './components/Sidebar/SidebarTabs';
 import { ClusterLegend } from './components/Legend/ClusterLegend';
 import { SelectionIndicator } from './components/SelectionIndicator/SelectionIndicator';
 import { ImageWithTimeout } from './components/ImageWithTimeout';
+import { OfficerChatbot } from './components/Chatbot/OfficerChatbot';
 import { motion } from 'framer-motion';
 import { Layers, Mountain, Building } from 'lucide-react';
 
@@ -137,7 +138,7 @@ function App() {
       <div className="flex items-center justify-center h-screen bg-canvas-bg text-white">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
-          <p>Loading hackathon submissions...</p>
+          <p>Loading governance grievance data...</p>
         </div>
       </div>
     );
@@ -462,6 +463,9 @@ function App() {
             <span className="sr-only">LinkedIn</span>
           </span>
         </a>
+
+        {/* Officer Chatbot */}
+        <OfficerChatbot />
       </div>
     </div>
   );
