@@ -205,7 +205,7 @@ Turn grievance density into a geographic metaphor to reveal hotspots and problem
 
 ### Live Demo
 
-- Start here: [serjoschduering.github.io/kgl-submission-explorer](https://serjoschduering.github.io/kgl-submission-explorer/)
+- Start here: [dhanaabhirajk.github.io/kgl-submission-explorer](https://dhanaabhirajk.github.io/kgl-submission-explorer/)
 
 ### Getting Started (local)
 
